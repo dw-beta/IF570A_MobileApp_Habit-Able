@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray">#808080</color>
+    <color name="default_background">#2d3445</color>
+    <color name="date_highlight">#16b9f2</color>
+    <color name="today_section">#1f2431</color>
+    <color name="button_background">#17c0f9</color>
 </resources>
