@@ -13,10 +13,34 @@
         <action
             android:id="@+id/action_journeyFragment_to_byeSugarFragment"
             app:destination="@id/byeSugarFragment" />
+        <action
+            android:id="@+id/action_journeyFragment_to_exerciseFragment"
+            app:destination="@id/exerciseFragment" />
+        <action
+            android:id="@+id/action_journeyFragment_to_meditationFragment"
+            app:destination="@id/meditationFragment" />
+        <action
+            android:id="@+id/action_journeyFragment_to_drinkFragment"
+            app:destination="@id/drinkFragment" />
     </fragment>
     <fragment
         android:id="@+id/byeSugarFragment"
         android:name="com.example.uts_lec.ByeSugarFragment"
         android:label="fragment_bye_sugar"
         tools:layout="@layout/fragment_bye_sugar" />
+    <fragment
+        android:id="@+id/exerciseFragment"
+        android:name="com.example.uts_lec.ExerciseFragment"
+        android:label="fragment_exercise"
+        tools:layout="@layout/fragment_exercise" />
+    <fragment
+        android:id="@+id/meditationFragment"
+        android:name="com.example.uts_lec.MeditationFragment"
+        android:label="fragment_meditation"
+        tools:layout="@layout/fragment_meditation" />
+    <fragment
+        android:id="@+id/drinkFragment"
+        android:name="com.example.uts_lec.DrinkFragment"
+        android:label="fragment_drink"
+        tools:layout="@layout/fragment_drink" />
 </navigation>

@@ -29,6 +29,36 @@ class JourneyFragment : Fragment() {
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
+
+        val nbutton2 : Button = view.findViewById(R.id.button2)
+        nbutton2.setOnClickListener{
+            val fragment = ExerciseFragment()
+            val fragmentManager = requireActivity().supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.frame_layout, fragment)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
+
+        val nbutton3 : Button = view.findViewById(R.id.button3)
+        nbutton3.setOnClickListener{
+            val fragment = MeditationFragment()
+            val fragmentManager = requireActivity().supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.frame_layout, fragment)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
+
+        val nbutton4 : Button = view.findViewById(R.id.button4)
+        nbutton4.setOnClickListener{
+            val fragment = DrinkFragment()
+            val fragmentManager = requireActivity().supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.frame_layout, fragment)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
         return view
     }
 }
