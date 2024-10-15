@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/journeyFragment">
+
+    <fragment
+        android:id="@+id/journeyFragment"
+        android:name="com.example.uts_lec.JourneyFragment"
+        android:label="fragment_journey"
+        tools:layout="@layout/fragment_journey" >
+        <action
+            android:id="@+id/action_journeyFragment_to_byeSugarFragment"
+            app:destination="@id/byeSugarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/byeSugarFragment"
+        android:name="com.example.uts_lec.ByeSugarFragment"
+        android:label="fragment_bye_sugar"
+        tools:layout="@layout/fragment_bye_sugar" />
+</navigation>
