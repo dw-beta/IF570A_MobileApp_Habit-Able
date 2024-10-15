@@ -11,11 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:orientation="horizontal"
-        android:background="@color/today_section">
+        android:background="@color/header_background">
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
@@ -113,17 +113,8 @@
         android:textSize="18sp"
         android:textColor="@color/black"/>
 
-    <!-- EditText for new habit input -->
-    <EditText
-        android:id="@+id/habitInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter your new habit"
-        android:padding="16dp"
-        android:textColorHint="@color/white"/>
-
     <Button
-        android:id="@+id/button"
+        android:id="@+id/createHabitButton"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

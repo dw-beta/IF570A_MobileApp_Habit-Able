@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/default_background"
-    tools:context=".JourneyFragment">
-
+    tools:context=".CreateHabitFragment">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="130dp"
@@ -21,7 +20,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textSize="24sp"
-            android:text="Journey"
+            android:text="BUILD A NEW HABIT"
             android:textColor="@color/white"/>
     </LinearLayout>
 
@@ -33,7 +32,7 @@
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/button_background"
         android:padding="20dp"
-        android:text="SAY GOOD BYE TO SUGAR"
+        android:text="SLEEP OVER 8 HOURS"
         android:textSize="20sp"/>
 
     <Button
@@ -44,7 +43,7 @@
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/button_background"
         android:padding="20dp"
-        android:text="EXERCISE AND SNOOZE"
+        android:text="WORKOUT"
         android:textSize="20sp"/>
 
     <Button
@@ -55,7 +54,7 @@
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/button_background"
         android:padding="20dp"
-        android:text="MEDITATION FOR PEACE OF MIND"
+        android:text="STUDY EVERY DAY"
         android:textSize="20sp"/>
 
     <Button
@@ -66,7 +65,19 @@
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/button_background"
         android:padding="20dp"
-        android:text="DRINK 2 LITTERS OF WATER TO HIDRATE"
+        android:text="BUILD YOUR OWN CUSTOM HABIT"
         android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="150dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/button_background"
+        android:padding="20dp"
+        android:text="BACK"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
 
 </LinearLayout>
