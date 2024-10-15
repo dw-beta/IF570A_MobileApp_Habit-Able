@@ -15,7 +15,7 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
@@ -66,7 +66,7 @@
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/button_background"
         android:padding="20dp"
-        android:text="DRINK 2 LITTERS OF WATER TO HIDRATE"
+        android:text="DRINK 2 LITERS OF WATER TO HIDRATE"
         android:textSize="20sp"/>
 
 </LinearLayout>
