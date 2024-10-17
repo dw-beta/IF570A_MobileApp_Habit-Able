@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#1F2431"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        android:gravity="center_vertical">
+
+        <ImageButton
+            android:id="@+id/back_button"
+            style="@style/BackButtonStyle"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="@string/back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/notification"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
+
+    <!-- Reminder Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="30dp"
+        android:padding="16dp"
+        android:background="@drawable/gradient_background">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/reminder"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:layout_weight="1" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/reminder_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:padding="16dp"
+            android:contentDescription="@string/reminder_switch"
+            android:thumbTint="@color/notification_color"
+            android:trackTint="@color/notification_color" />
+    </LinearLayout>
+
+    <!-- Time Selection Section -->
+    <LinearLayout
+        android:id="@+id/time_selection_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:background="@drawable/gradient_background"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/time"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/default_time"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:padding="16dp" />
+    </LinearLayout>
+</LinearLayout>

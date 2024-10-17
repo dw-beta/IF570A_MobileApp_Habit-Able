@@ -7,4 +7,13 @@
     <color name="date_highlight">#16b9f2</color>
     <color name="header_background">#1f2431</color>
     <color name="button_background">#17c0f9</color>
+    <color name="grey">#7A7A7A</color>
+    <color name="notification_color">#0064FF</color>
+    <color name="general_settings_color">#AC0000</color>
+    <color name="language_color">#E9410D</color>
+    <color name="share_with_friends_color">#00ACA2</color>
+    <color name="rate_us_color">#0DE999</color>
+    <color name="feedback_color">#25A1FB</color>
+    <color name="notification_color_light">#73C2FF</color>
+    <color name="grey_light">#D3D3D3</color>
 </resources>
