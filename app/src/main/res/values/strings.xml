@@ -52,4 +52,6 @@
     <string name="active">ACTIVE</string>
     <string name="anytime">ANYTIME</string>
     <string name="sleep_icon">Sleep Icon</string>
+    <string name="my_achievements">My Achievements</string>
+    <string name="my_achievements_desc">You haven\'t gotten any achievements yet.</string>
 </resources>
