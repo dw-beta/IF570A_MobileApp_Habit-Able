@@ -6,15 +6,40 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class TodayFragment : Fragment() {
+    private lateinit var recyclerViewHabits: RecyclerView
+    private lateinit var habitAdapter: HabitAdapter
+    private lateinit var habitList: List<Habit>
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_today, container, false)
-        val createHabitButton : Button = view.findViewById(R.id.createHabitButton)
+
+        // Initialize the RecyclerView
+        recyclerViewHabits = view.findViewById(R.id.recyclerViewHabits)
+        recyclerViewHabits.layoutManager = LinearLayoutManager(context)
+
+        // Sample data
+        habitList = listOf(
+            Habit("Drink Water"),
+            Habit("Exercise"),
+            Habit("Read a Book"),
+            Habit("Meditate"),
+            Habit("Sleep Early")
+        )
+
+        // Set up the adapter
+        habitAdapter = HabitAdapter(habitList)
+        recyclerViewHabits.adapter = habitAdapter
+
+        // Set up the button to navigate to CreateHabitFragment
+        val createHabitButton: Button = view.findViewById(R.id.createHabitButton)
         createHabitButton.setOnClickListener {
             val fragment = CreateHabitFragment()
             val fragmentManager = requireActivity().supportFragmentManager
@@ -23,6 +48,7 @@ class TodayFragment : Fragment() {
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
+
         return view
     }
 }

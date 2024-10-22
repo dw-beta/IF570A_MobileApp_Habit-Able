@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="113dp"
+    android:layout_margin="20dp"
+    android:background="@drawable/habit_history_background"
+    android:orientation="horizontal">
+
+    <ImageView
+    android:layout_width="100dp"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:contentDescription="@string/sleep_icon"
+    android:src="@drawable/baseline_bedtime_24"/>
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/habitNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:paddingTop="5dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="top"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="Everyday"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+    </LinearLayout>
+</LinearLayout>
