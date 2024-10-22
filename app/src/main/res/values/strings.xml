@@ -40,4 +40,16 @@
     <string name="afternoon_time">12:00</string>
     <string name="evening_time">17:00</string>
     <string name="end_of_day_time">21:00</string>
+    <string name="current_streak">CURRENT STREAK</string>
+    <string name="calendar">Calendar</string>
+    <string name="history">HISTORY</string>
+    <string name="habits">Habits</string>
+    <string name="achievements">Achievements</string>
+    <string name="best_streak">Best streak: 0</string>
+    <string name="habit_finished">HABIT FINISHED</string>
+    <string name="this_week">This week: 0</string>
+    <string name="completion_rate">COMPLETION RATE</string>
+    <string name="active">ACTIVE</string>
+    <string name="anytime">ANYTIME</string>
+    <string name="sleep_icon">Sleep Icon</string>
 </resources>
