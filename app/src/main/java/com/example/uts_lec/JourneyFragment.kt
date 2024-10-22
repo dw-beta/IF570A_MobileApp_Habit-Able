@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.example.uts_lec.databinding.FragmentJourneyBinding
 
+//private const val TAG = "JourneyFragment"
+
+
 class JourneyFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
