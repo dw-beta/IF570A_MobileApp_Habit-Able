@@ -12,9 +12,9 @@ import androidx.fragment.app.commit
 import org.w3c.dom.Text
 
 
-private const val TAG = "HistoryFragment"
+private const val TAG = "HabitsFragment"
 
-class HistoryFragment : Fragment() {
+class HabitsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -23,7 +23,7 @@ class HistoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_history, container, false)
+        val view = inflater.inflate(R.layout.fragment_habits, container, false)
         val calendar = view.findViewById<TextView>(R.id.calendar)
         val habits = view.findViewById<TextView>(R.id.habits)
         val achievements = view.findViewById<TextView>(R.id.achievements)
