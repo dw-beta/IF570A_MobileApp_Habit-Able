@@ -101,7 +101,7 @@ class RegisterActivity : AppCompatActivity() {
 
                     userRef.setValue(userData).addOnCompleteListener { dbTask ->
                         if (dbTask.isSuccessful) {
-                            startActivity(Intent(this, MainActivity::class.java))
+                            startActivity(Intent(this, LoginActivity::class.java))
                             finish()
                         } else {
                             Toast.makeText(baseContext, "Failed to save user data.",
