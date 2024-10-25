@@ -27,4 +27,3 @@ class HabitAdapter(private val habitList: List<Habit>) : RecyclerView.Adapter<Ha
         val habitNameTextView: TextView = itemView.findViewById(R.id.habitNameTextView)
     }
 }
-
