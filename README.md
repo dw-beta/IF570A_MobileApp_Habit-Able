@@ -17,3 +17,4 @@ Fitur-fitur yang sudah diimplementasikan:
      4. Me page
 3. Kalender (History page)
 4. Share button (Me page)
+5. Create habit (Today page) 
