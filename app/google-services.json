@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "207572625131",
+    "project_id": "habitable-4a8a8",
+    "storage_bucket": "habitable-4a8a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:207572625131:android:a80c6d3ca6172329a100ae",
+        "android_client_info": {
+          "package_name": "com.example.uts_lec"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBT1igvsz810MT4ZyhgPwctZRpqDaHKZTM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
