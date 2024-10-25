@@ -5,40 +5,37 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QueryDocumentSnapshot
 
 class TodayFragment : Fragment() {
+
+    private lateinit var db: FirebaseFirestore
     private lateinit var recyclerViewHabits: RecyclerView
     private lateinit var habitAdapter: HabitAdapter
-    private lateinit var habitList: List<Habit>
+    private lateinit var emptyTextView: TextView
+    private var habitList: MutableList<Habit> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_today, container, false)
-
-        // Initialize the RecyclerView
+        db = FirebaseFirestore.getInstance()
         recyclerViewHabits = view.findViewById(R.id.recyclerViewHabits)
+        emptyTextView = view.findViewById(R.id.emptyTextView)
         recyclerViewHabits.layoutManager = LinearLayoutManager(context)
 
-        // Sample data
-        habitList = listOf(
-            Habit("Drink Water"),
-            Habit("Exercise"),
-            Habit("Read a Book"),
-            Habit("Meditate"),
-            Habit("Sleep Early")
-        )
-
-        // Set up the adapter
         habitAdapter = HabitAdapter(habitList)
         recyclerViewHabits.adapter = habitAdapter
 
-        // Set up the button to navigate to CreateHabitFragment
+        // Fetch habits from Firestore
+        fetchHabits()
+
         val createHabitButton: Button = view.findViewById(R.id.createHabitButton)
         createHabitButton.setOnClickListener {
             val fragment = CreateHabitFragment()
@@ -50,5 +47,30 @@ class TodayFragment : Fragment() {
         }
 
         return view
+    }
+
+    private fun fetchHabits() {
+        db.collection("habits")
+            .get()
+            .addOnSuccessListener { result ->
+                habitList.clear()
+                for (document: QueryDocumentSnapshot in result) {
+                    val habit = document.toObject(Habit::class.java)
+                    habitList.add(habit)
+                }
+                habitAdapter.notifyDataSetChanged()
+
+                // Show message if habit list is empty
+                if (habitList.isEmpty()) {
+                    recyclerViewHabits.visibility = View.GONE
+                    emptyTextView.visibility = View.VISIBLE
+                } else {
+                    recyclerViewHabits.visibility = View.VISIBLE
+                    emptyTextView.visibility = View.GONE
+                }
+            }
+            .addOnFailureListener {
+                // Handle the error if needed
+            }
     }
 }
