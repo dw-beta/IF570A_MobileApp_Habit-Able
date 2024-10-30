@@ -27,6 +27,17 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/startmeditation"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/button_background"
+        android:padding="20dp"
+        android:textSize="20sp"
+        android:text="Start"/>
+
+    <Button
         android:id="@+id/backtojourney"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
