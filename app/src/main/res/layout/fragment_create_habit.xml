@@ -78,6 +78,20 @@
         android:layout_marginTop="20dp"
         android:hint="Enter custom habit name"
         android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:padding="16dp"
+        android:textSize="18sp"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/habitDescriptionEditText"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:hint="Enter Description"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
         android:padding="16dp"
         android:textSize="18sp"
         android:visibility="gone"/>
