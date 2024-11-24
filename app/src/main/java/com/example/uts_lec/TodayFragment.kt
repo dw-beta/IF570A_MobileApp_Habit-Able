@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
+import Habit
 
 class TodayFragment : Fragment() {
 
@@ -50,27 +53,36 @@ class TodayFragment : Fragment() {
     }
 
     private fun fetchHabits() {
-        db.collection("habits")
-            .get()
-            .addOnSuccessListener { result ->
-                habitList.clear()
-                for (document: QueryDocumentSnapshot in result) {
-                    val habit = document.toObject(Habit::class.java)
-                    habitList.add(habit)
-                }
-                habitAdapter.notifyDataSetChanged()
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
 
-                // Show message if habit list is empty
-                if (habitList.isEmpty()) {
-                    recyclerViewHabits.visibility = View.GONE
-                    emptyTextView.visibility = View.VISIBLE
-                } else {
-                    recyclerViewHabits.visibility = View.VISIBLE
-                    emptyTextView.visibility = View.GONE
+        if (userId != null) {
+            db.collection("users")  // Collection for each user
+                .document(userId)  // User document based on UID
+                .collection("habits")  // Subcollection for the user's habits
+                .get()
+                .addOnSuccessListener { result ->
+                    habitList.clear()
+                    for (document: QueryDocumentSnapshot in result) {
+                        val habit = document.toObject(Habit::class.java)
+                        habitList.add(habit)
+                    }
+                    habitAdapter.notifyDataSetChanged()
+
+                    // Show message if habit list is empty
+                    if (habitList.isEmpty()) {
+                        recyclerViewHabits.visibility = View.GONE
+                        emptyTextView.visibility = View.VISIBLE
+                    } else {
+                        recyclerViewHabits.visibility = View.VISIBLE
+                        emptyTextView.visibility = View.GONE
+                    }
                 }
-            }
-            .addOnFailureListener {
-                // Handle the error if needed
-            }
+                .addOnFailureListener {
+                    // Handle the error if needed
+                }
+        }
+        else {
+            Toast.makeText(context, "User not logged in", Toast.LENGTH_SHORT).show()
+        }
     }
 }
