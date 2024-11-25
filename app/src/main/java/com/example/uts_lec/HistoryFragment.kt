@@ -24,18 +24,12 @@ class HistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_history, container, false)
-        val calendar = view.findViewById<TextView>(R.id.calendar)
         val habits = view.findViewById<TextView>(R.id.habits)
         val achievements = view.findViewById<TextView>(R.id.achievements)
 
-        calendar.setOnClickListener {
-            Log.d(TAG, "Calendar clicked")
-            navigateToFragment(HistoryFragment())
-        }
-
         habits.setOnClickListener {
             Log.d(TAG, "Habits clicked")
-            navigateToFragment(HabitsFragment())
+            navigateToFragment(HistoryFragment())
         }
 
         achievements.setOnClickListener {
