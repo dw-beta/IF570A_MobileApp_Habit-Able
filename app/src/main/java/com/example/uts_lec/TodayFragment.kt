@@ -33,11 +33,16 @@ class TodayFragment : Fragment() {
         emptyTextView = view.findViewById(R.id.emptyTextView)
         recyclerViewHabits.layoutManager = LinearLayoutManager(context)
 
-        habitAdapter = HabitAdapter(habitList)
-        recyclerViewHabits.adapter = habitAdapter
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        if (userId != null) {
+            habitAdapter = HabitAdapter(habitList, userId) // Pass userId to the adapter
+            recyclerViewHabits.adapter = habitAdapter
 
-        // Fetch habits from Firestore
-        fetchHabits()
+            // Fetch habits from Firestore
+            fetchHabits(userId)
+        } else {
+            Toast.makeText(context, "User not logged in", Toast.LENGTH_SHORT).show()
+        }
 
         val createHabitButton: Button = view.findViewById(R.id.createHabitButton)
         createHabitButton.setOnClickListener {
@@ -53,46 +58,52 @@ class TodayFragment : Fragment() {
         return view
     }
 
-    private fun fetchHabits() {
-        val userId = FirebaseAuth.getInstance().currentUser?.uid
+    private fun fetchHabits(userId: String) {
+        db.collection("habitcreated")
+            .whereEqualTo("userId", userId)
+            .get()
+            .addOnSuccessListener { result ->
+                habitList.clear() // Clear current list before adding fresh data
+                for (document: QueryDocumentSnapshot in result) {
+                    val habitName = document.getString("customHabitName") ?: "Unknown Habit"
+                    val description = document.getString("description") ?: ""
+                    val dateCreated = document.getDate("dateCreated") ?: Date()
+                    val dateCompleted = document.getDate("dateCompleted")
+                    val isCompleted = document.getBoolean("isCompleted") ?: false
 
-        if (userId != null) {
-            db.collection("habitcreated")
-                .whereEqualTo("userId", userId)
-                .get()
-                .addOnSuccessListener { result ->
-                    habitList.clear()
-                    for (document: QueryDocumentSnapshot in result) {
-                        val habitName = document.getString("customHabitName") ?: "Unknown Habit"
-                        val description = document.getString("description") ?: ""
-                        val dateCreated = document.getDate("dateCreated") ?: Date()
-                        val dateCompleted = document.getDate("dateCompleted")
-                        val isCompleted = document.getBoolean("isCompleted") ?: false
-
-                        val habitData = mapOf(
-                            "customHabitName" to habitName,
-                            "description" to description,
-                            "dateCreated" to dateCreated,
-                            "dateCompleted" to dateCompleted,
-                            "isCompleted" to isCompleted
-                        )
-                        habitList.add(habitData)
-                    }
-                    habitAdapter.notifyDataSetChanged()
-
-                    if (habitList.isEmpty()) {
-                        recyclerViewHabits.visibility = View.GONE
-                        emptyTextView.visibility = View.VISIBLE
-                    } else {
-                        recyclerViewHabits.visibility = View.VISIBLE
-                        emptyTextView.visibility = View.GONE
-                    }
+                    // Include the document ID as habitId
+                    val habitData = mapOf(
+                        "habitId" to document.id,
+                        "customHabitName" to habitName,
+                        "description" to description,
+                        "dateCreated" to dateCreated,
+                        "dateCompleted" to dateCompleted,
+                        "isCompleted" to isCompleted
+                    )
+                    habitList.add(habitData)
                 }
-                .addOnFailureListener {
-                    // Handle the error if needed
+                habitAdapter.notifyDataSetChanged()
+
+                if (habitList.isEmpty()) {
+                    recyclerViewHabits.visibility = View.GONE
+                    emptyTextView.visibility = View.VISIBLE
+                } else {
+                    recyclerViewHabits.visibility = View.VISIBLE
+                    emptyTextView.visibility = View.GONE
                 }
-        } else {
-            Toast.makeText(context, "User not logged in", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                // Handle the error if needed
+            }
+    }
+
+    // Optional: You can also implement a method to remove a habit from the list directly.
+    fun removeHabitFromList(habitId: String) {
+        val indexToRemove = habitList.indexOfFirst { it["habitId"] == habitId }
+        if (indexToRemove != -1) {
+            habitList.removeAt(indexToRemove)
+            habitAdapter.notifyItemRemoved(indexToRemove)
         }
     }
 }
+

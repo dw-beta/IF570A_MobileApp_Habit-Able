@@ -108,7 +108,8 @@ class CreateHabitMenuFragment : Fragment() {
                 "repeat" to getRepeatOption(),
                 "endAt" to getEndAtOption(),
                 "userId" to userId,
-                "dateCreated" to Date()
+                "dateCreated" to Date(),
+                "completionStatus" to false  // Initialize completion status as false
             )
 
             FirebaseFirestore.getInstance()
@@ -121,7 +122,8 @@ class CreateHabitMenuFragment : Fragment() {
                 .addOnFailureListener {
                     showToast("Failed to save habit")
                 }
-        } else {
+        }
+        else {
             showToast("User not logged in or habit name is empty")
         }
     }
@@ -140,7 +142,8 @@ class CreateHabitMenuFragment : Fragment() {
         // Check if any specific day is selected, otherwise return "Anytime"
         return if (binding.anytimeImageButton.isPressed) {
             "Unlimited"
-        } else {
+        }
+        else {
             "Selected Days"
         }
     }

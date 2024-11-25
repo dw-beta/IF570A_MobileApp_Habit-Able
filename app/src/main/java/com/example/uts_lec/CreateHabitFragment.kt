@@ -48,7 +48,8 @@ class CreateHabitFragment : Fragment() {
             val habitDescription = habitDescriptionEditText.text.toString().trim()
             if (habitName.isNotEmpty() && habitDescription.isNotEmpty()) {
                 savePremadeHabitToFirestore(habitName, habitDescription)
-            } else {
+            }
+            else {
                 Toast.makeText(context, "All fields must be filled", Toast.LENGTH_SHORT).show()
             }
         }
