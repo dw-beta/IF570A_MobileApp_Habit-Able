@@ -5,9 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import Habit
 
-class HabitAdapter(private val habitList: List<Habit>) : RecyclerView.Adapter<HabitAdapter.HabitViewHolder>() {
+class HabitAdapter(private val habitList: List<Map<String, Any?>>) : RecyclerView.Adapter<HabitAdapter.HabitViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -16,8 +15,8 @@ class HabitAdapter(private val habitList: List<Habit>) : RecyclerView.Adapter<Ha
     }
 
     override fun onBindViewHolder(holder: HabitViewHolder, position: Int) {
-        val habit = habitList[position]
-        holder.habitNameTextView.text = habit.habitName
+        val habitData = habitList[position]
+        holder.habitNameTextView.text = habitData["customHabitName"] as String
     }
 
     override fun getItemCount(): Int {

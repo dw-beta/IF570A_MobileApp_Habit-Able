@@ -9,9 +9,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Date
+
 
 class CreateHabitFragment : Fragment() {
 
@@ -34,21 +36,23 @@ class CreateHabitFragment : Fragment() {
         val buildCustomHabitButton: Button = view.findViewById(R.id.button4)
 
         buildCustomHabitButton.setOnClickListener {
-            habitNameEditText.visibility = View.VISIBLE
-            habitDescriptionEditText.visibility = View.VISIBLE
-            saveButton.visibility = View.VISIBLE
+            val createHabitMenuFragment = CreateHabitMenuFragment()
+            val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
+            transaction.replace(R.id.frame_layout, createHabitMenuFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
 
         saveButton.setOnClickListener {
             val habitName = habitNameEditText.text.toString().trim()
             val habitDescription = habitDescriptionEditText.text.toString().trim()
             if (habitName.isNotEmpty() && habitDescription.isNotEmpty()) {
-                saveCustomHabitToFirestore(habitName, habitDescription)
-            }
-            else {
+                savePremadeHabitToFirestore(habitName, habitDescription)
+            } else {
                 Toast.makeText(context, "All fields must be filled", Toast.LENGTH_SHORT).show()
             }
         }
+
         val backButton = view.findViewById<Button>(R.id.back_button)
         backButton.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
@@ -56,7 +60,7 @@ class CreateHabitFragment : Fragment() {
         return view
     }
 
-    private fun saveCustomHabitToFirestore(name: String, description: String) {
+    private fun savePremadeHabitToFirestore(name: String, description: String) {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         if (userId != null) {
             val newHabit = Habit(

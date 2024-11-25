@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
-import Habit
+import java.util.Date
 
 class TodayFragment : Fragment() {
 
@@ -21,7 +21,7 @@ class TodayFragment : Fragment() {
     private lateinit var recyclerViewHabits: RecyclerView
     private lateinit var habitAdapter: HabitAdapter
     private lateinit var emptyTextView: TextView
-    private var habitList: MutableList<Habit> = mutableListOf()
+    private var habitList: MutableList<Map<String, Any?>> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +42,7 @@ class TodayFragment : Fragment() {
         val createHabitButton: Button = view.findViewById(R.id.createHabitButton)
         createHabitButton.setOnClickListener {
             val fragment = CreateHabitFragment()
+            fragment.setTargetFragment(this, 0)
             val fragmentManager = requireActivity().supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.frame_layout, fragment)
@@ -56,19 +57,29 @@ class TodayFragment : Fragment() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
 
         if (userId != null) {
-            db.collection("users")  // Collection for each user
-                .document(userId)  // User document based on UID
-                .collection("habits")  // Subcollection for the user's habits
+            db.collection("habitcreated")
+                .whereEqualTo("userId", userId)
                 .get()
                 .addOnSuccessListener { result ->
                     habitList.clear()
                     for (document: QueryDocumentSnapshot in result) {
-                        val habit = document.toObject(Habit::class.java)
-                        habitList.add(habit)
+                        val habitName = document.getString("customHabitName") ?: "Unknown Habit"
+                        val description = document.getString("description") ?: ""
+                        val dateCreated = document.getDate("dateCreated") ?: Date()
+                        val dateCompleted = document.getDate("dateCompleted")
+                        val isCompleted = document.getBoolean("isCompleted") ?: false
+
+                        val habitData = mapOf(
+                            "customHabitName" to habitName,
+                            "description" to description,
+                            "dateCreated" to dateCreated,
+                            "dateCompleted" to dateCompleted,
+                            "isCompleted" to isCompleted
+                        )
+                        habitList.add(habitData)
                     }
                     habitAdapter.notifyDataSetChanged()
 
-                    // Show message if habit list is empty
                     if (habitList.isEmpty()) {
                         recyclerViewHabits.visibility = View.GONE
                         emptyTextView.visibility = View.VISIBLE
@@ -80,8 +91,7 @@ class TodayFragment : Fragment() {
                 .addOnFailureListener {
                     // Handle the error if needed
                 }
-        }
-        else {
+        } else {
             Toast.makeText(context, "User not logged in", Toast.LENGTH_SHORT).show()
         }
     }

@@ -50,8 +50,36 @@
     <string name="this_week">This week: 0</string>
     <string name="completion_rate">COMPLETION RATE</string>
     <string name="active">ACTIVE</string>
-    <string name="anytime">ANYTIME</string>
     <string name="sleep_icon">Sleep Icon</string>
     <string name="my_achievements">My Achievements</string>
     <string name="my_achievements_desc">You haven\'t gotten any achievements yet.</string>
+    <string name="back_button_description">Back</string>
+    <string name="add_habit">Add Habit</string>
+    <string name="name">Name</string>
+    <string name="name_hint">Enter habit name</string>
+    <string name="icon">Icon</string>
+    <string name="icon_button_description">Select Icon</string>
+    <string name="color">Color</string>
+    <string name="color_button_description">Select Color</string>
+    <string name="repeat">Repeat</string>
+    <string name="anytime">Anytime</string>
+    <string name="anytime_button_text">Anytime</string>
+    <string name="morning_button_text">Morning</string>
+    <string name="afternoon_button_text">Afternoon</string>
+    <string name="evening_button_text">Evening</string>
+    <string name="encouragement">Encouragement</string>
+    <string name="encouragement_hint">Enter encouragement text</string>
+    <string name="end_on">End On</string>
+    <string name="unlimited">Unlimited</string>
+    <string name="add">Add</string>
+    <string name="anytime_button_description">anytime button description</string>
+    <string name="do_it_at">do it at</string>
+    <string name="custom">custom\n</string>
+    <string name="change">change</string>
+    <string name="select_days">Select Days</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+
 </resources>
