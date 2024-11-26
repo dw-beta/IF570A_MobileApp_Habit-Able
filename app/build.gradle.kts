@@ -54,6 +54,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore:24.8.1")
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.database.ktx)
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
