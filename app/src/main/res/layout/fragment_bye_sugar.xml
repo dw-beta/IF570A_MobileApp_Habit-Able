@@ -1,50 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/default_background"
     tools:context=".ByeSugarFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:orientation="horizontal"
-        android:background="@color/header_background">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/default_background">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:orientation="horizontal"
+            android:background="@color/header_background">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="24sp"
+                android:text="Bye Sugar"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="centerCrop"
+            android:layout_margin="45px"
+            android:padding="20px"
+            android:src="@drawable/sugar_free" />
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="20dp"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:text="Sugar is a type of carbohydrate that occurs naturally in foods such as fruits, vegetables, and dairy. Manufacturers also add sugar to many processed foods and drinks. Sugar is a carbohydrate that the body converts into glucose, which it uses for energy. When people eat sugar, the body uses it as a source of energy. However, eating too much sugar can lead to weight gain, tooth decay, and an increased risk of heart disease. Sugar is also linked to an increased risk of type 2 diabetes. Cutting back on sugar can help people lose weight, reduce their risk of heart disease, and lower their risk of type 2 diabetes." />
+
+        <Button
+            android:id="@+id/startbyesugar"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="24sp"
-            android:text="Bye Sugar"
-            android:textColor="@color/white"/>
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/button_background"
+            android:padding="20dp"
+            android:textSize="20sp"
+            android:text="Start" />
+
+        <Button
+            android:id="@+id/backtojourney"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/button_background"
+            android:padding="20dp"
+            android:textSize="20sp"
+            android:text="Cancel" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/startbyesugar"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/button_background"
-        android:padding="20dp"
-        android:textSize="20sp"
-        android:text="Start"/>
-
-    <Button
-        android:id="@+id/backtojourney"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/button_background"
-        android:padding="20dp"
-        android:textSize="20sp"
-        android:text="Cancel"/>
-
-</LinearLayout>
+</ScrollView>

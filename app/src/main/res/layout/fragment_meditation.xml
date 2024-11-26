@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,20 +11,43 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="130dp"
-        android:orientation="horizontal"
-        android:background="@color/header_background">
+        android:orientation="vertical"
+        android:background="@color/default_background">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="24sp"
-            android:text="Meditation"
-            android:textColor="@color/white"/>
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:orientation="horizontal"
+            android:background="@color/header_background">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="24sp"
+                android:text="Exercise"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:scaleType="centerCrop"
+        android:layout_margin="45px"
+        android:padding="20px"
+        android:src="@drawable/meditation"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="20dp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:text="Meditation is a practice where an individual uses a technique – such as mindfulness, or focusing the mind on a particular object, thought, or activity – to train attention and awareness, and achieve a mentally clear and emotionally calm and stable state. Meditation has been practiced since antiquity in numerous religious traditions and beliefs. It is also practiced outside religious traditions. Different meditative practices have been developed in various cultures and traditions."/>
 
     <Button
         android:id="@+id/startmeditation"
@@ -47,4 +70,5 @@
         android:padding="20dp"
         android:textSize="20sp"
         android:text="Cancel" />
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
