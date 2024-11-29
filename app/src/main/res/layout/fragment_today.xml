@@ -99,12 +99,65 @@
         <!-- Dates will be added programmatically -->
     </GridLayout>
 
+    <!-- Horizontal Scroll View for Habit Time Selection Buttons -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="horizontal">
+
+        <!-- LinearLayout containing the buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="5dp">
+
+            <Button
+                android:id="@+id/anytimeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Anytime"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/button_background"
+                android:layout_marginEnd="16dp"/>
+
+            <Button
+                android:id="@+id/morningButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Morning"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/button_background"
+                android:layout_marginEnd="16dp"/>
+
+            <Button
+                android:id="@+id/afternoonButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Afternoon"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/button_background"
+                android:layout_marginEnd="16dp"/>
+
+            <Button
+                android:id="@+id/eveningButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/button_background"
+                android:minWidth="48dp"
+                android:text="Evening"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
     <!-- Separator Line -->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/black"
-        android:layout_marginTop="70dp"/>
+        android:layout_marginTop="20dp"/>
 
     <!-- RecyclerView for habits -->
     <androidx.recyclerview.widget.RecyclerView

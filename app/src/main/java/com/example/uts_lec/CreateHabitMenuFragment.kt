@@ -1,6 +1,7 @@
 package com.example.uts_lec
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,9 @@ class CreateHabitMenuFragment : Fragment() {
     private var _binding: FragmentCreateHabitMenuBinding? = null
     private val binding get() = _binding!!
 
+    // Variable to hold selected time
+    private var selectedTime: String = "Anytime"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,20 +38,21 @@ class CreateHabitMenuFragment : Fragment() {
             requireActivity().onBackPressed()
         }
 
+        // Set listeners for the time buttons
         binding.anytimeButton.setOnClickListener {
-            onTimeButtonClick(it)
+            selectTime("Anytime", it)
         }
 
         binding.morningButton.setOnClickListener {
-            onTimeButtonClick(it)
+            selectTime("Morning", it)
         }
 
         binding.afternoonButton.setOnClickListener {
-            onTimeButtonClick(it)
+            selectTime("Afternoon", it)
         }
 
         binding.eveningButton.setOnClickListener {
-            onTimeButtonClick(it)
+            selectTime("Evening", it)
         }
 
         binding.addButton.setOnClickListener {
@@ -58,7 +63,8 @@ class CreateHabitMenuFragment : Fragment() {
             if (isChecked) {
                 binding.encouragementText.visibility = View.VISIBLE
                 binding.timePicker.visibility = View.VISIBLE
-            } else {
+            }
+            else {
                 binding.encouragementText.visibility = View.GONE
                 binding.timePicker.visibility = View.GONE
             }
@@ -87,24 +93,29 @@ class CreateHabitMenuFragment : Fragment() {
         }
     }
 
-    private fun onTimeButtonClick(view: View) {
+    private fun selectTime(time: String, view: View) {
         binding.anytimeButton.setBackgroundResource(R.drawable.gradient_background)
         binding.morningButton.setBackgroundResource(R.drawable.gradient_background)
         binding.afternoonButton.setBackgroundResource(R.drawable.gradient_background)
         binding.eveningButton.setBackgroundResource(R.drawable.gradient_background)
 
+        // Highlight the selected button
         view.setBackgroundResource(R.drawable.gradient_background_blue)
+
+        // Display a Toast with the selected time
+        Toast.makeText(view.context, "Selected time: $selectedTime", Toast.LENGTH_SHORT).show()
     }
 
     private fun saveHabitToFirestore() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         val habitName = binding.habitNameEditText.text.toString().trim()
+
         if (userId != null && habitName.isNotEmpty()) {
             val habitData = hashMapOf(
                 "color" to "blue",
                 "icon" to "",
                 "customHabitName" to habitName,
-                "doItAt" to getSelectedTime(),
+                "doItAt" to selectedTime,  // Use the selected time here
                 "repeat" to getRepeatOption(),
                 "endAt" to getEndAtOption(),
                 "userId" to userId,
@@ -128,22 +139,11 @@ class CreateHabitMenuFragment : Fragment() {
         }
     }
 
-    private fun getSelectedTime(): String {
-        return when {
-            binding.anytimeButton.isPressed -> "Anytime"
-            binding.morningButton.isPressed -> "Morning"
-            binding.afternoonButton.isPressed -> "Afternoon"
-            binding.eveningButton.isPressed -> "Evening"
-            else -> "Anytime"
-        }
-    }
-
     private fun getRepeatOption(): String {
-        // Check if any specific day is selected, otherwise return "Anytime"
+        // Check if any specific repeat option is selected
         return if (binding.anytimeImageButton.isPressed) {
             "Unlimited"
-        }
-        else {
+        } else {
             "Selected Days"
         }
     }
@@ -186,13 +186,9 @@ class CreateHabitMenuFragment : Fragment() {
     }
 
     private fun navigateToTodayFragment() {
-        // Begin a new fragment transaction
         val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
-        // Replace the current fragment with the HabitsFragment
         transaction.replace(R.id.frame_layout, TodayFragment())
-        // Add the transaction to the back stack so the user can navigate back
         transaction.addToBackStack(null)
-        // Commit the transaction to apply the changes
         transaction.commit()
     }
 
