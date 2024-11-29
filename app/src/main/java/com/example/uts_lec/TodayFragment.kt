@@ -42,9 +42,22 @@ class TodayFragment : Fragment() {
 
             // Set up button listeners
             setupTimeFilterButtons(view, userId)
-        } else {
+        }
+        else {
             Toast.makeText(context, "User not logged in", Toast.LENGTH_SHORT).show()
         }
+
+        val createHabitButton: Button = view.findViewById(R.id.createHabitButton)
+        createHabitButton.setOnClickListener {
+            val fragment = CreateHabitFragment()
+            fragment.setTargetFragment(this, 0)
+            val fragmentManager = requireActivity().supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.frame_layout, fragment)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
+
         return view
     }
 
