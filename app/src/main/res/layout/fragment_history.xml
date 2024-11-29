@@ -93,6 +93,7 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
                 <TextView
+                    android:id="@+id/currentStreakTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
@@ -103,6 +104,7 @@
                     android:textSize="40sp"
                     android:textStyle="bold" />
                 <TextView
+                    android:id="@+id/bestStreakTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
@@ -134,6 +136,7 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
                 <TextView
+                    android:id="@+id/totalHabitsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
@@ -144,6 +147,7 @@
                     android:textSize="40sp"
                     android:textStyle="bold" />
                 <TextView
+                    android:id="@+id/weeklyHabitsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
@@ -176,6 +180,7 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
                 <TextView
+                    android:id="@+id/completionRateTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
@@ -192,7 +197,7 @@
                     android:paddingBottom="5dp"
                     android:paddingStart="10dp"
                     android:paddingEnd="0dp"
-                    android:text="0/18 habits"
+                    android:text=""
                     android:textColor="@color/grey_light"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -216,24 +221,11 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:paddingTop="10dp"
-            android:text="@string/active"
+            android:text="COMPLETED HABITS"
             android:textAlignment="textStart"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="@string/anytime"
-            android:textAlignment="textStart"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout
@@ -241,51 +233,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/habitHistoryRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="113dp"
-            android:layout_margin="20dp"
-            android:background="@drawable/habit_history_background"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:padding="20dp"
-                android:contentDescription="@string/sleep_icon"
-                android:src="@drawable/baseline_bedtime_24"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="bottom"
-                    android:paddingTop="5dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:text="SLEEP OVER 8H"
-                    android:textColor="@color/white"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="top"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:text="Everyday"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_height="match_parent"
+            android:padding="16dp" />
     </LinearLayout>
 
 </LinearLayout>

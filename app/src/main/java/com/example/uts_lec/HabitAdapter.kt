@@ -64,6 +64,8 @@ class HabitAdapter(
         if (habitId != null) {
             val updatedHabitData = habitData.toMutableMap().apply {
                 put("completionStatus", true) // Set completionStatus to true
+                put("completionDate", com.google.firebase.Timestamp.now()) // Save the current completion date
+                put("userId", userId) // Save the user ID
                 remove("isCompleted") // Ensure no "isCompleted" field is added
             }
 
