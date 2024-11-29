@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -23,13 +24,31 @@ class HabitAdapter(
 
     override fun onBindViewHolder(holder: HabitViewHolder, position: Int) {
         val habitData = habitList[position]
-        holder.habitNameTextView.text = habitData["customHabitName"] as String
+        val habitName = habitData["customHabitName"] as String
 
-        // Set up the CheckBox listener
+        // Set the habit name and handle text truncation
+        holder.habitNameTextView.text = habitName
+
+        // Show full name in a Toast on tap
+        holder.habitNameTextView.setOnClickListener {
+            Toast.makeText(holder.itemView.context, habitName, Toast.LENGTH_SHORT).show()
+        }
+
+        // Show full name in a Dialog on long-tap
+        holder.habitNameTextView.setOnLongClickListener {
+            val context = holder.itemView.context
+            androidx.appcompat.app.AlertDialog.Builder(context)
+                .setTitle("Habit Name")
+                .setMessage(habitName)
+                .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+                .show()
+            true // Return true to indicate the long click was handled
+        }
+
+        // Handle the CheckBox
         holder.habitCheckBox.isChecked = habitData["completionStatus"] as? Boolean ?: false
         holder.habitCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                // Update Firestore and move the habit
                 moveToHabitsSucceeded(habitData, position)
             }
         }

@@ -30,7 +30,9 @@
             android:paddingEnd="10dp"
             android:textColor="@color/white"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end" />
 
         <TextView
             android:layout_width="match_parent"
