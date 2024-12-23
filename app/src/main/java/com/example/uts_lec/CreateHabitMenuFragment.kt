@@ -1,7 +1,8 @@
 package com.example.uts_lec
 
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,18 +11,21 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.uts_lec.databinding.FragmentCreateHabitMenuBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.util.Date
+import android.util.Log
+import com.example.uts_lec.R
 
 class CreateHabitMenuFragment : Fragment() {
 
     private var _binding: FragmentCreateHabitMenuBinding? = null
     private val binding get() = _binding!!
 
-    // Variable to hold selected time
+    // Variable to hold selected time and color
     private var selectedTime: String = "Anytime"
+    private var selectedColor: String = "#0000FF" // Default color (blue)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,8 +67,7 @@ class CreateHabitMenuFragment : Fragment() {
             if (isChecked) {
                 binding.encouragementText.visibility = View.VISIBLE
                 binding.timePicker.visibility = View.VISIBLE
-            }
-            else {
+            } else {
                 binding.encouragementText.visibility = View.GONE
                 binding.timePicker.visibility = View.GONE
             }
@@ -103,7 +106,8 @@ class CreateHabitMenuFragment : Fragment() {
         view.setBackgroundResource(R.drawable.gradient_background_blue)
 
         // Display a Toast with the selected time
-        Toast.makeText(view.context, "Selected time: $selectedTime", Toast.LENGTH_SHORT).show()
+        Toast.makeText(view.context, "Selected time: $time", Toast.LENGTH_SHORT).show()
+        selectedTime = time
     }
 
     private fun saveHabitToFirestore() {
@@ -112,15 +116,15 @@ class CreateHabitMenuFragment : Fragment() {
 
         if (userId != null && habitName.isNotEmpty()) {
             val habitData = hashMapOf(
-                "color" to "blue",
+                "color" to selectedColor,
                 "icon" to "",
                 "customHabitName" to habitName,
-                "doItAt" to selectedTime,  // Use the selected time here
+                "doItAt" to selectedTime,
                 "repeat" to getRepeatOption(),
                 "endAt" to getEndAtOption(),
                 "userId" to userId,
                 "dateCreated" to Date(),
-                "completionStatus" to false  // Initialize completion status as false
+                "completionStatus" to false
             )
 
             FirebaseFirestore.getInstance()
@@ -133,14 +137,12 @@ class CreateHabitMenuFragment : Fragment() {
                 .addOnFailureListener {
                     showToast("Failed to save habit")
                 }
-        }
-        else {
+        } else {
             showToast("User not logged in or habit name is empty")
         }
     }
 
     private fun getRepeatOption(): String {
-        // Check if any specific repeat option is selected
         return if (binding.anytimeImageButton.isPressed) {
             "Unlimited"
         } else {
@@ -166,19 +168,52 @@ class CreateHabitMenuFragment : Fragment() {
         }
         bottomSheetDialog.setContentView(bottomSheetView)
 
-        val cancelButton = bottomSheetView.findViewById<Button>(R.id.cancel_button)
-        val changeButton = bottomSheetView.findViewById<Button>(R.id.change_button)
+        if (type == "Color") {
+            setupColorSelection(bottomSheetView, bottomSheetDialog)
+        }
 
+        val cancelButton = bottomSheetView.findViewById<Button>(R.id.cancel_button)
         cancelButton.setOnClickListener {
             bottomSheetDialog.dismiss()
         }
 
-        changeButton.setOnClickListener {
-            showToast("$type changed")
-            bottomSheetDialog.dismiss()
-        }
-
         bottomSheetDialog.show()
+    }
+
+    private fun setupColorSelection(view: View, dialog: BottomSheetDialog) {
+        val colorButtons = listOf(
+            view.findViewById<Button>(R.id.color_red) to "#FF0000",
+            view.findViewById<Button>(R.id.color_blue) to "#0000FF",
+            view.findViewById<Button>(R.id.color_green) to "#00FF00",
+            view.findViewById<Button>(R.id.color_yellow) to "#FFFF00",
+            view.findViewById<Button>(R.id.color_purple) to "#800080",
+            view.findViewById<Button>(R.id.color_orange) to "#FFA500"
+        )
+
+        for ((button, color) in colorButtons) {
+            val drawable = button.background as? GradientDrawable
+            if (drawable != null) {
+                drawable.setColor(Color.parseColor(color)) // Set initial color
+                button.background = drawable // Ensure the drawable is set back to the button
+                val initialColor = (drawable.color?.defaultColor ?: Color.WHITE).toString()
+                Log.d("ColorSelection", "Initial drawable color for button ${button.id}: $initialColor")
+            } else {
+                Log.e("ColorSelection", "Drawable is null or not a GradientDrawable for button ${button.id}")
+            }
+
+            button.setOnClickListener {
+                selectedColor = color
+                Log.d("ColorSelection", "Selected color: $color")
+                if (drawable != null) {
+                    drawable.setColor(Color.parseColor(color))
+                    Log.d("ColorSelection", "Drawable color set to: $color")
+                    button.background = drawable // Ensure the drawable is set back to the button
+                } else {
+                    Log.e("ColorSelection", "Drawable is null or not a GradientDrawable")
+                }
+                dialog.dismiss()
+            }
+        }
     }
 
     private fun showToast(message: String) {

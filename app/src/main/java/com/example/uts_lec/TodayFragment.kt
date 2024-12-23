@@ -128,40 +128,44 @@ class TodayFragment : Fragment() {
     private fun fetchHabits(userId: String, doItAt: String) {
         db.collection("habitcreated")
             .whereEqualTo("userId", userId)
-            .whereEqualTo("doItAt", doItAt) // Filter by doItAt field
-            .get()
-            .addOnSuccessListener { result ->
-                habitList.clear() // Clear the current list
-                for (document: QueryDocumentSnapshot in result) {
-                    val habitName = document.getString("customHabitName") ?: "Unknown Habit"
-                    val description = document.getString("description") ?: ""
-                    val dateCreated = document.getDate("dateCreated") ?: Date()
-                    val dateCompleted = document.getDate("dateCompleted")
-                    val isCompleted = document.getBoolean("isCompleted") ?: false
+            .whereEqualTo("doItAt", doItAt)
+            .addSnapshotListener { result, error ->
+                if (error != null) {
+                    Toast.makeText(context, "Failed to fetch habits", Toast.LENGTH_SHORT).show()
+                    return@addSnapshotListener
+                }
 
-                    val habitData = mapOf(
-                        "habitId" to document.id,
-                        "customHabitName" to habitName,
-                        "description" to description,
-                        "dateCreated" to dateCreated,
-                        "dateCompleted" to dateCompleted,
-                        "isCompleted" to isCompleted
-                    )
-                    habitList.add(habitData)
-                }
-                habitAdapter.notifyDataSetChanged()
+                if (result != null) {
+                    habitList.clear()
+                    for (document: QueryDocumentSnapshot in result) {
+                        val habitName = document.getString("customHabitName") ?: "Unknown Habit"
+                        val description = document.getString("description") ?: ""
+                        val dateCreated = document.getDate("dateCreated") ?: Date()
+                        val dateCompleted = document.getDate("dateCompleted")
+                        val isCompleted = document.getBoolean("isCompleted") ?: false
+                        val color = document.getString("color") ?: "#18C6FD" // Default color if not specified
 
-                if (habitList.isEmpty()) {
-                    recyclerViewHabits.visibility = View.GONE
-                    emptyTextView.visibility = View.VISIBLE
+                        val habitData = mapOf(
+                            "habitId" to document.id,
+                            "customHabitName" to habitName,
+                            "description" to description,
+                            "dateCreated" to dateCreated,
+                            "dateCompleted" to dateCompleted,
+                            "isCompleted" to isCompleted,
+                            "color" to color // Add the color field
+                        )
+                        habitList.add(habitData)
+                    }
+                    habitAdapter.notifyDataSetChanged()
+
+                    if (habitList.isEmpty()) {
+                        recyclerViewHabits.visibility = View.GONE
+                        emptyTextView.visibility = View.VISIBLE
+                    } else {
+                        recyclerViewHabits.visibility = View.VISIBLE
+                        emptyTextView.visibility = View.GONE
+                    }
                 }
-                else {
-                    recyclerViewHabits.visibility = View.VISIBLE
-                    emptyTextView.visibility = View.GONE
-                }
-            }
-            .addOnFailureListener {
-                Toast.makeText(context, "Failed to fetch habits", Toast.LENGTH_SHORT).show()
             }
     }
 }
