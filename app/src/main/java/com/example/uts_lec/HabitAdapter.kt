@@ -1,5 +1,6 @@
 package com.example.uts_lec
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +26,20 @@ class HabitAdapter(
     override fun onBindViewHolder(holder: HabitViewHolder, position: Int) {
         val habitData = habitList[position]
         val habitName = habitData["customHabitName"] as String
+        val colorValue = habitData["color"]
+
+        // Log the retrieved color value
+        android.util.Log.d("HabitAdapter", "Retrieved color for habit $habitName: $colorValue")
+
+        var colorHex = colorValue as? String ?: "#18C6FD" // Default to start color if no color is specified
+
+        // Add '#' if not present
+        if (!colorHex.startsWith("#")) {
+            colorHex = "#$colorHex"
+        }
+
+        // Log the final color value
+        android.util.Log.d("HabitAdapter", "Final color for habit $habitName: $colorHex")
 
         // Set the habit name and handle text truncation
         holder.habitNameTextView.text = habitName
@@ -52,8 +67,14 @@ class HabitAdapter(
                 moveToHabitsSucceeded(habitData, position)
             }
         }
-    }
 
+        // Set the background color based on the hexadecimal color code
+        try {
+            holder.itemView.setBackgroundColor(Color.parseColor(colorHex))
+        } catch (e: IllegalArgumentException) {
+            android.util.Log.e("HabitAdapter", "Invalid color format: $colorHex", e)
+        }
+    }
     override fun getItemCount(): Int {
         return habitList.size
     }
