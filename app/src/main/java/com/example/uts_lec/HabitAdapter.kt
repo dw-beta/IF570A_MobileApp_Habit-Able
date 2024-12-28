@@ -98,8 +98,10 @@ class HabitAdapter(
                     db.collection("habitsucceeded").add(updatedHabitData)
                         .addOnSuccessListener {
                             // Successfully added to "habitsucceeded", now remove from habitList
-                            habitList.removeAt(position)
-                            notifyItemRemoved(position)
+                            if (position < habitList.size) {
+                                habitList.removeAt(position)
+                                notifyItemRemoved(position)
+                            }
                         }
                         .addOnFailureListener {
                             // Handle any errors if necessary
