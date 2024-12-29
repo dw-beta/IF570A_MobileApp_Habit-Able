@@ -6,29 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.commit
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Date
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ExerciseFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ExerciseFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        db = FirebaseFirestore.getInstance()
     }
 
     override fun onCreateView(
@@ -36,14 +25,63 @@ class ExerciseFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_exercise, container, false)
+
+        val startButton = view.findViewById<Button>(R.id.startexercise)
         val journey = view.findViewById<Button>(R.id.backtojourney)
+
+        startButton.setOnClickListener {
+            createByeSugarHabit()
+        }
 
         journey.setOnClickListener {
             navigateToFragment(JourneyFragment())
         }
-        // Inflate the layout for this fragment
 
         return view
+    }
+
+    private fun createByeSugarHabit() {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        if (userId == null) {
+            Toast.makeText(context, "User not logged in", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Check if habit already exists
+        db.collection("habitcreated")
+            .whereEqualTo("userId", userId)
+            .whereEqualTo("customHabitName", "Exercise")
+            .get()
+            .addOnSuccessListener { documents ->
+                if (documents.isEmpty) {
+                    // Create new habit
+                    val habitData = hashMapOf(
+                        "userId" to userId,
+                        "customHabitName" to "Exercise",
+                        "description" to "Exercise is any bodily activity that enhances or maintains physical fitness and overall health and wellness",
+                        "dateCreated" to Date(),
+                        "isCompleted" to false,
+                        "doItAt" to "Anytime",
+                        "color" to "#97acac"  // Using a different color to distinguish it
+                    )
+
+                    db.collection("habitcreated")
+                        .add(habitData)
+                        .addOnSuccessListener {
+                            Toast.makeText(context, "Exercise journey created successfully!", Toast.LENGTH_SHORT).show()
+                            navigateToFragment(TodayFragment())
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(context, "Failed to create habit: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
+                } else {
+                    Toast.makeText(context, "Exercise journey already exists!", Toast.LENGTH_SHORT).show()
+                    navigateToFragment(TodayFragment())
+                }
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(context, "Error checking for existing habit: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun navigateToFragment(fragment: Fragment) {

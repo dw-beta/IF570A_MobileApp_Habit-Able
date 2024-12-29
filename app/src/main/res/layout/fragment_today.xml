@@ -47,10 +47,7 @@
             android:gravity="center_horizontal"/>
 
         <!-- Dates and Arrow Buttons -->
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none">
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -76,7 +73,7 @@
                     android:textSize="24sp"
                     android:textColor="@color/white"
                     android:gravity="center"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="1dp"
                     android:layout_gravity="center"/>
 
                 <ImageButton
@@ -89,7 +86,7 @@
                     tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
 
-        </HorizontalScrollView>
+
     </LinearLayout>
 
     <!-- Horizontal Scroll View for Habit Time Selection Buttons -->
