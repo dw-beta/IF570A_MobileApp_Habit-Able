@@ -33,6 +33,8 @@ import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import android.database.sqlite.SQLiteDatabase // Add this import
+import android.widget.Button
+import com.example.uts_lec.LoginActivity
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -117,6 +119,10 @@ class MeSignInFragment : Fragment() {
         feedbackLayout.setOnClickListener {
             Log.d(TAG, "Feedback clicked")
             feedback()
+        }
+        val logoutButton = view.findViewById<Button>(R.id.logout_button)
+        logoutButton.setOnClickListener {
+            showLogoutConfirmationDialog()
         }
         loadUserProfile() // Call the method here
 
@@ -267,6 +273,20 @@ class MeSignInFragment : Fragment() {
             profileImageView.setImageURI(Uri.parse(photoPath))
         }
         cursor.close()
+    }
+
+    private fun showLogoutConfirmationDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Log Out")
+            .setMessage("Are you sure you want to log out?")
+            .setPositiveButton("Yes") { _, _ ->
+                FirebaseAuth.getInstance().signOut()
+                val intent = Intent(requireContext(), LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            }
+            .setNegativeButton("No", null)
+            .show()
     }
 
     companion object {

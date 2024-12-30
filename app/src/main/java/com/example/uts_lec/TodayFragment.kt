@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -59,7 +60,6 @@ class TodayFragment : Fragment() {
         val createHabitButton: Button = view.findViewById(R.id.createHabitButton)
         createHabitButton.setOnClickListener {
             val fragment = CreateHabitFragment()
-            fragment.setTargetFragment(this, 0)
             val fragmentManager = requireActivity().supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.frame_layout, fragment)
@@ -69,6 +69,12 @@ class TodayFragment : Fragment() {
 
         // Set up the arrow buttons
         setupArrowButtons(view)
+
+        // Listen for results from CreateHabitFragment
+        setFragmentResultListener("requestKey") { _, bundle ->
+            val result = bundle.getString("bundleKey")
+            // Handle the result here
+        }
 
         return view
     }

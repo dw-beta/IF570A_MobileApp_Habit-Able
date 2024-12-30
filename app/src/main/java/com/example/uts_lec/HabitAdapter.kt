@@ -1,12 +1,19 @@
 package com.example.uts_lec
 
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.ImageButton
+import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -52,7 +59,7 @@ class HabitAdapter(
         // Show full name in a Dialog on long-tap
         holder.habitNameTextView.setOnLongClickListener {
             val context = holder.itemView.context
-            androidx.appcompat.app.AlertDialog.Builder(context)
+            AlertDialog.Builder(context)
                 .setTitle("Habit Name")
                 .setMessage(habitName)
                 .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
@@ -74,7 +81,13 @@ class HabitAdapter(
         } catch (e: IllegalArgumentException) {
             android.util.Log.e("HabitAdapter", "Invalid color format: $colorHex", e)
         }
+
+        // Handle the ImageButton for the popup menu
+        holder.menuButton.setOnClickListener {
+            showPopupMenu(holder.menuButton, habitData["habitId"] as String)
+        }
     }
+
     override fun getItemCount(): Int {
         return habitList.size
     }
@@ -113,8 +126,62 @@ class HabitAdapter(
         }
     }
 
+    private fun showPopupMenu(view: View, habitId: String) {
+        val popupMenu = PopupMenu(view.context, view)
+        popupMenu.inflate(R.menu.habit_menu)
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.edit_habit -> {
+                    val fragment = EditHabitMenuFragment().apply {
+                        arguments = Bundle().apply {
+                            putString("habitId", habitId)
+                        }
+                    }
+                    val fragmentManager = (view.context as AppCompatActivity).supportFragmentManager
+                    fragmentManager.beginTransaction()
+                        .replace(R.id.frame_layout, fragment)
+                        .addToBackStack(null)
+                        .commit()
+                    true
+                }
+                R.id.delete_habit -> {
+                    showDeleteConfirmationDialog(view.context, habitId)
+                    true
+                }
+                else -> false
+            }
+        }
+        popupMenu.show()
+    }
+
+    private fun showDeleteConfirmationDialog(context: Context, habitId: String) {
+        AlertDialog.Builder(context)
+            .setTitle("Delete Habit")
+            .setMessage("Are you sure you want to delete this habit?")
+            .setPositiveButton("Yes") { dialog, _ ->
+                deleteHabit(context, habitId)
+                dialog.dismiss()
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun deleteHabit(context: Context, habitId: String) {
+        FirebaseFirestore.getInstance().collection("habitcreated").document(habitId)
+            .delete()
+            .addOnSuccessListener {
+                Toast.makeText(context, "Habit deleted", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Failed to delete habit", Toast.LENGTH_SHORT).show()
+            }
+    }
+
     class HabitViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val habitNameTextView: TextView = itemView.findViewById(R.id.habitNameTextView)
         val habitCheckBox: CheckBox = itemView.findViewById(R.id.habitCompletedCheckBox)
+        val menuButton: ImageButton = itemView.findViewById(R.id.menuButton)
     }
 }

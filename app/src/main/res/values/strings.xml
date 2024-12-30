@@ -82,5 +82,12 @@
     <string name="thursday">Thursday</string>
     <string name="friday">Friday</string>
     <string name="achievement_icon">this is the achievement icon</string>
+    <string name="channel_name">this is the channel name</string>
+    <string name="channel_description">this is the channel description\n</string>
+    <string name="select_repeat_days">Select Repeat Days</string>
+    <string name="confirm">Confirm</string>
+    <string name="menu">menu\n</string>
+    <string name="update">UPDATE</string>
+    <string name="update_habit">Update Habit</string>
 
 </resources>

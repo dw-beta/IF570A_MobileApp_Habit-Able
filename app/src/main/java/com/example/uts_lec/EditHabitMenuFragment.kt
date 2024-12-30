@@ -22,7 +22,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.example.uts_lec.databinding.FragmentCreateHabitMenuBinding
+import com.example.uts_lec.databinding.FragmentEditHabitMenuBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -31,14 +31,15 @@ import java.util.Date
 import android.util.Log
 import android.widget.CheckBox
 
-class CreateHabitMenuFragment : Fragment() {
+class EditHabitMenuFragment : Fragment() {
 
-    private var _binding: FragmentCreateHabitMenuBinding? = null
+    private var _binding: FragmentEditHabitMenuBinding? = null
     private val binding get() = _binding!!
 
     // Variable to hold selected time and color
     private var selectedTime: String = "Anytime"
     private var selectedColor: String = "#0000FF" // Default color (blue)
+    private var habitId: String? = null
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -54,7 +55,7 @@ class CreateHabitMenuFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCreateHabitMenuBinding.inflate(inflater, container, false)
+        _binding = FragmentEditHabitMenuBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -62,14 +63,17 @@ class CreateHabitMenuFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         createNotificationChannel()
 
+        habitId = arguments?.getString("habitId")
+        habitId?.let { loadHabitData(it) }
+
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                requireActivity().onBackPressedDispatcher.onBackPressed()
+                parentFragmentManager.popBackStack()
             }
         })
 
         binding.backButton.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+            parentFragmentManager.popBackStack()
         }
 
         // Set listeners for the time buttons
@@ -156,6 +160,54 @@ class CreateHabitMenuFragment : Fragment() {
         selectedTime = time
     }
 
+    private fun loadHabitData(habitId: String) {
+        FirebaseFirestore.getInstance().collection("habitcreated").document(habitId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    val habitData = document.data
+                    if (habitData != null) {
+                        binding.habitNameEditText.setText(habitData["customHabitName"] as String)
+                        selectedColor = habitData["color"] as String
+                        selectedTime = habitData["doItAt"] as String
+                        binding.anytimeImageButton.contentDescription = habitData["repeat"] as String
+                        binding.endOnSwitch.isChecked = habitData["endAt"] != "Unlimited"
+                        binding.encouragementText.setText(habitData["encouragementText"] as String)
+
+                        if (habitData["reminderTime"] != null) {
+                            binding.reminderSwitch.isChecked = true
+                            val reminderTime = habitData["reminderTime"] as String
+                            val timeParts = reminderTime.split(":")
+                            val hour = timeParts[0].toInt()
+                            val minute = timeParts[1].toInt()
+                            binding.timePicker.hour = hour
+                            binding.timePicker.minute = minute
+                        } else {
+                            binding.reminderSwitch.isChecked = false
+                            binding.encouragementText.visibility = View.GONE
+                            binding.timePicker.visibility = View.GONE
+                        }
+
+                        updateUI()
+                    }
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Failed to load habit data", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun updateUI() {
+        // Update the UI elements based on the loaded data
+        when (selectedTime) {
+            "Anytime" -> binding.anytimeButton.setBackgroundResource(R.drawable.gradient_background_blue)
+            "Morning" -> binding.morningButton.setBackgroundResource(R.drawable.gradient_background_blue)
+            "Afternoon" -> binding.afternoonButton.setBackgroundResource(R.drawable.gradient_background_blue)
+            "Evening" -> binding.eveningButton.setBackgroundResource(R.drawable.gradient_background_blue)
+        }
+        // Set other UI elements based on the loaded data...
+    }
+
     private fun saveHabitToFirestore() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         val habitName = binding.habitNameEditText.text.toString().trim()
@@ -179,19 +231,22 @@ class CreateHabitMenuFragment : Fragment() {
                 habitData["reminderTime"] = getReminderTime()
             }
 
-            FirebaseFirestore.getInstance()
-                .collection("habitcreated")
-                .add(habitData)
-                .addOnSuccessListener {
-                    showToast("Habit saved")
-                    if (binding.reminderSwitch.isChecked) {
-                        scheduleNotification(getReminderTime())
+            habitId?.let {
+                FirebaseFirestore.getInstance()
+                    .collection("habitcreated")
+                    .document(it)
+                    .set(habitData)
+                    .addOnSuccessListener {
+                        showToast("Habit updated")
+                        if (binding.reminderSwitch.isChecked) {
+                            scheduleNotification(getReminderTime())
+                        }
+                        navigateToTodayFragment()
                     }
-                    navigateToTodayFragment()
-                }
-                .addOnFailureListener {
-                    showToast("Failed to save habit")
-                }
+                    .addOnFailureListener {
+                        showToast("Failed to update habit")
+                    }
+            }
         } else {
             showToast("User not logged in or habit name is empty")
         }
