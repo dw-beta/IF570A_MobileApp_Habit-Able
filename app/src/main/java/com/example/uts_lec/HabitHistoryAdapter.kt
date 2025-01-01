@@ -18,8 +18,8 @@ class HabitHistoryAdapter(
 
     override fun onBindViewHolder(holder: HabitViewHolder, position: Int) {
         val habit = completedHabits[position]
-        holder.habitNameTextView.text = habit?.get("customHabitName") as? String ?: "Unknown"
-        val completionDate = (habit?.get("completionDate") as? com.google.firebase.Timestamp)?.toDate()
+        holder.habitNameTextView.text = habit["customHabitName"] as? String ?: "Unknown"
+        val completionDate = (habit["completionDate"] as? com.google.firebase.Timestamp)?.toDate()
         holder.habitCompletionDateTextView.text = if (completionDate != null) {
             "Completed on: ${android.text.format.DateFormat.format("yyyy-MM-dd", completionDate)}"
         } else {

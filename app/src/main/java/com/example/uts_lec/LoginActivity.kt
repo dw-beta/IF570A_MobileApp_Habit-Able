@@ -1,5 +1,6 @@
 package com.example.uts_lec
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -15,6 +16,11 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
     private lateinit var registerTextView: TextView
+
+    override fun attachBaseContext(newBase: Context) {
+        val context = LocaleHelper.setLocale(newBase, LocaleHelper.getLocale(newBase).language)
+        super.attachBaseContext(context)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

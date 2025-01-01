@@ -12,17 +12,22 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.example.uts_lec.R
 import com.example.uts_lec.database.UserDatabaseHelper
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -30,25 +35,26 @@ import java.util.Date
 import java.util.Locale
 import android.Manifest
 import android.content.pm.PackageManager
-import android.widget.Toast
-import androidx.core.content.ContextCompat
-import android.database.sqlite.SQLiteDatabase // Add this import
+import android.database.sqlite.SQLiteDatabase
 import android.widget.Button
+import com.example.uts_lec.LanguageFragment
 import com.example.uts_lec.LoginActivity
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 private const val TAG = "MeFragment"
-private const val PICK_IMAGE_REQUEST = 1
-private const val TAKE_PHOTO_REQUEST = 2
 
 class MeSignInFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var profileImageView: ImageView
     private lateinit var userNameTextView: TextView
+    private lateinit var editIcon: ImageView
     private var photoUri: Uri? = null
     private lateinit var dbHelper: UserDatabaseHelper
+
+    private lateinit var pickImageLauncher: ActivityResultLauncher<Intent>
+    private lateinit var takePhotoLauncher: ActivityResultLauncher<Uri>
 
     private val requestCameraPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -67,6 +73,24 @@ class MeSignInFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
         dbHelper = UserDatabaseHelper(requireContext())
+
+        pickImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.data?.let { uri ->
+                    profileImageView.setImageURI(uri)
+                    savePhotoPathToDatabase(uri.toString())
+                }
+            }
+        }
+
+        takePhotoLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+            if (success) {
+                photoUri?.let { uri ->
+                    profileImageView.setImageURI(uri)
+                    savePhotoPathToDatabase(uri.toString())
+                }
+            }
+        }
     }
 
     override fun onCreateView(
@@ -77,6 +101,7 @@ class MeSignInFragment : Fragment() {
 
         profileImageView = view.findViewById(R.id.profile_image)
         userNameTextView = view.findViewById(R.id.user_name)
+        editIcon = view.findViewById(R.id.edit_icon)
 
         val profileLayout = view.findViewById<FrameLayout>(R.id.profile_layout)
         profileLayout.setOnClickListener {
@@ -125,6 +150,10 @@ class MeSignInFragment : Fragment() {
             showLogoutConfirmationDialog()
         }
         loadUserProfile() // Call the method here
+
+        editIcon.setOnClickListener {
+            showEditNameDialog()
+        }
 
         return view
     }
@@ -189,25 +218,21 @@ class MeSignInFragment : Fragment() {
     }
 
     private fun takePhoto() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (takePictureIntent.resolveActivity(requireActivity().packageManager) != null) {
-            val photoFile: File? = try {
-                createImageFile()
-            } catch (ex: IOException) {
-                Log.e(TAG, "Error occurred while creating the file", ex)
-                null
+        val photoFile: File? = try {
+            createImageFile()
+        } catch (ex: IOException) {
+            Log.e(TAG, "Error occurred while creating the file", ex)
+            null
+        }
+        photoFile?.also {
+            photoUri = FileProvider.getUriForFile(
+                requireContext(),
+                "com.example.uts_lec.fileprovider",
+                it
+            )
+            photoUri?.let { uri ->
+                takePhotoLauncher.launch(uri)
             }
-            photoFile?.also {
-                photoUri = FileProvider.getUriForFile(
-                    requireContext(),
-                    "com.example.uts_lec.fileprovider",
-                    it
-                )
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
-                startActivityForResult(takePictureIntent, TAKE_PHOTO_REQUEST)
-            }
-        } else {
-            Log.e(TAG, "No camera app available to handle the intent")
         }
     }
 
@@ -223,27 +248,7 @@ class MeSignInFragment : Fragment() {
 
     private fun pickImageFromGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(intent, PICK_IMAGE_REQUEST)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                PICK_IMAGE_REQUEST -> {
-                    data?.data?.let { uri ->
-                        profileImageView.setImageURI(uri)
-                        savePhotoPathToDatabase(uri.toString())
-                    }
-                }
-                TAKE_PHOTO_REQUEST -> {
-                    photoUri?.let { uri ->
-                        profileImageView.setImageURI(uri)
-                        savePhotoPathToDatabase(uri.toString())
-                    }
-                }
-            }
-        }
+        pickImageLauncher.launch(intent)
     }
 
     private fun savePhotoPathToDatabase(photoPath: String) {
@@ -273,6 +278,58 @@ class MeSignInFragment : Fragment() {
             profileImageView.setImageURI(Uri.parse(photoPath))
         }
         cursor.close()
+
+        // Fetch and display the user's name from Firestore
+        val user = FirebaseAuth.getInstance().currentUser
+        user?.let {
+            val userRef = FirebaseFirestore.getInstance().collection("users").document(it.uid)
+            userRef.get().addOnSuccessListener { document ->
+                if (document != null) {
+                    val name = document.getString("name")
+                    userNameTextView.text = name ?: getString(R.string.default_user_name)
+                } else {
+                    userNameTextView.text = getString(R.string.default_user_name)
+                }
+            }.addOnFailureListener {
+                userNameTextView.text = getString(R.string.default_user_name)
+            }
+        }
+    }
+
+    private fun showEditNameDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Edit Name")
+
+        val input = EditText(requireContext())
+        input.hint = "Enter new name"
+        builder.setView(input)
+
+        builder.setPositiveButton("Update") { dialog, _ ->
+            val newName = input.text.toString()
+            if (newName.isNotEmpty()) {
+                updateUserName(newName)
+            }
+            dialog.dismiss()
+        }
+        builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+
+        builder.show()
+    }
+
+    private fun updateUserName(newName: String) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val db = FirebaseFirestore.getInstance()
+
+        db.collection("users").document(userId)
+            .update("name", newName)
+            .addOnSuccessListener {
+                userNameTextView.text = newName
+                Toast.makeText(requireContext(), "Name updated successfully", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(requireContext(), "Failed to update name", Toast.LENGTH_SHORT).show()
+                Log.e(TAG, "Error updating name", e)
+            }
     }
 
     private fun showLogoutConfirmationDialog() {

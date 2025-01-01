@@ -7,10 +7,9 @@
     android:background="@color/default_background"
     tools:context=".MeditationFragment">
 
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/default_background">
 
@@ -28,47 +27,47 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="24sp"
-                android:text="Exercise"
+                android:text="@string/meditation_title"
                 android:textColor="@color/white" />
         </LinearLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:scaleType="centerCrop"
-        android:layout_margin="45px"
-        android:padding="20px"
-        android:src="@drawable/meditation"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="centerCrop"
+            android:layout_margin="45px"
+            android:padding="20px"
+            android:src="@drawable/meditation"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:padding="20dp"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:text="Meditation is a practice where an individual uses a technique – such as mindfulness, or focusing the mind on a particular object, thought, or activity – to train attention and awareness, and achieve a mentally clear and emotionally calm and stable state. Meditation has been practiced since antiquity in numerous religious traditions and beliefs. It is also practiced outside religious traditions. Different meditative practices have been developed in various cultures and traditions."/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="20dp"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:text="@string/meditation_description"/>
 
-    <Button
-        android:id="@+id/startmeditation"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/button_background"
-        android:padding="20dp"
-        android:textSize="20sp"
-        android:text="Start"/>
+        <Button
+            android:id="@+id/startmeditation"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/button_background"
+            android:padding="20dp"
+            android:textSize="20sp"
+            android:text="@string/start_button_text"/>
 
-    <Button
-        android:id="@+id/backtojourney"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/button_background"
-        android:padding="20dp"
-        android:textSize="20sp"
-        android:text="Cancel" />
+        <Button
+            android:id="@+id/backtojourney"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/gradient_background_blue"
+            android:padding="20dp"
+            android:textSize="20sp"
+            android:text="@string/cancel_button_text"/>
     </LinearLayout>
 </ScrollView>

@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:background="@color/default_background"
     tools:context=".HistoryFragment">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="130dp"
@@ -27,42 +28,38 @@
             android:textStyle="bold" />
 
         <LinearLayout
-            android:layout_width="360dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/habits"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.2"
-                android:focusable="true"
-                android:gravity="bottom"
-                android:paddingStart="20dp"
-                android:paddingEnd="0dp"
-                android:text="Habits"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:clickable="true" />
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="0.4"
+            android:focusable="true"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:text="@string/habits"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:clickable="true" />
 
             <TextView
                 android:id="@+id/achievements"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
                 android:layout_weight="0.6"
-                android:focusable="true"
-                android:gravity="bottom"
-                android:text="@string/achievements"
-                android:textColor="@color/grey_light"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:clickable="true" />
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/achievements"
+            android:textColor="@color/grey_light"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:clickable="true" />
         </LinearLayout>
-
     </LinearLayout>
 
     <HorizontalScrollView
@@ -205,39 +202,24 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/active"
         android:layout_width="match_parent"
-        android:layout_height="89dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="10dp"
+        android:text="@string/completed_habits"
+        android:textAlignment="textStart"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-
-        <TextView
-            android:id="@+id/active"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:paddingTop="10dp"
-            android:text="COMPLETED HABITS"
-            android:textAlignment="textStart"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/habitHistoryRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/habitHistoryRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp" />
-    </LinearLayout>
-
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp" />
 </LinearLayout>

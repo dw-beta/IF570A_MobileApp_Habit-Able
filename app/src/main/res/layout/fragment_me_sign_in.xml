@@ -36,12 +36,19 @@
                 android:id="@+id/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="User"
+                android:layout_marginStart="16dp"
+                android:text="@string/default_user_name"
                 android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_gravity="center"
-                android:layout_marginStart="16dp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/edit_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_edit"
+                android:contentDescription="@string/edit" />
         </LinearLayout>
     </FrameLayout>
 
@@ -309,7 +316,7 @@
         android:layout_marginTop="16dp"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/gradient_background_blue"
-        android:text="Log Out"
+        android:text="@string/logout"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold" />

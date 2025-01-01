@@ -12,6 +12,11 @@ import com.example.uts_lec.meSection.MeSignInFragment
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
+    override fun attachBaseContext(newBase: Context) {
+        val context = LocaleHelper.setLocale(newBase, LocaleHelper.getLocale(newBase).language)
+        super.attachBaseContext(context)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)

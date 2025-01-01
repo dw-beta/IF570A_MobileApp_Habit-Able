@@ -22,7 +22,8 @@
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:paddingStart="24dp"
-            android:paddingEnd="24dp">
+            android:paddingEnd="24dp"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -73,12 +74,14 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/gradient_background"
         android:padding="16dp"
-        android:clickable="true">
+        android:clickable="true"
+        android:focusable="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:baselineAligned="false">
 
             <!-- Notification Option -->
             <LinearLayout
@@ -88,7 +91,8 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:clickable="true">
+                android:clickable="true"
+                android:focusable="true">
 
                 <FrameLayout
                     android:id="@+id/notification_icon_frame"
@@ -127,7 +131,8 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:clickable="true">
+                android:clickable="true"
+                android:focusable="true">
 
                 <FrameLayout
                     android:id="@+id/general_settings_icon_frame"
@@ -166,7 +171,8 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:clickable="true">
+                android:clickable="true"
+                android:focusable="true">
 
                 <FrameLayout
                     android:id="@+id/language_icon_frame"
@@ -202,12 +208,14 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/gradient_background"
         android:padding="16dp"
-        android:clickable="true">
+        android:clickable="true"
+        android:focusable="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:baselineAligned="false">
 
             <!-- Share with Friends Option -->
             <LinearLayout
@@ -217,7 +225,8 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:clickable="true">
+                android:clickable="true"
+                android:focusable="true">
 
                 <FrameLayout
                     android:id="@+id/share_with_friends_icon_frame"
@@ -256,7 +265,8 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:clickable="true">
+                android:clickable="true"
+                android:focusable="true">
 
                 <FrameLayout
                     android:id="@+id/rate_us_icon_frame"
@@ -295,7 +305,8 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:clickable="true">
+                android:clickable="true"
+                android:focusable="true">
 
                 <FrameLayout
                     android:id="@+id/feedback_icon_frame"

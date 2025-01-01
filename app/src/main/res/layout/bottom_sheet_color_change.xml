@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select Color"
+        android:text="@string/select_color"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
@@ -25,65 +25,66 @@
 
         <Button
             android:id="@+id/color_red"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_columnWeight="1"
             android:layout_margin="4dp"
             android:background="@drawable/color_button"
-            android:contentDescription="Red" />
+            android:contentDescription="@string/red"
+            android:padding="16dp" />
 
         <Button
             android:id="@+id/color_blue"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_columnWeight="1"
             android:layout_margin="4dp"
             android:background="@drawable/color_button"
-            android:contentDescription="Blue" />
+            android:contentDescription="@string/blue"
+            android:padding="16dp" />
 
         <Button
             android:id="@+id/color_green"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_columnWeight="1"
             android:layout_margin="4dp"
             android:background="@drawable/color_button"
-            android:contentDescription="Green" />
+            android:contentDescription="@string/green"
+            android:padding="16dp" />
 
         <Button
             android:id="@+id/color_yellow"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_columnWeight="1"
             android:layout_margin="4dp"
             android:background="@drawable/color_button"
-            android:contentDescription="Yellow" />
+            android:contentDescription="@string/yellow"
+            android:padding="16dp" />
 
         <Button
             android:id="@+id/color_purple"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_columnWeight="1"
             android:layout_margin="4dp"
             android:background="@drawable/color_button"
-            android:contentDescription="Purple" />
+            android:contentDescription="@string/purple"
+            android:padding="16dp" />
 
         <Button
             android:id="@+id/color_orange"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_columnWeight="1"
             android:layout_margin="4dp"
             android:background="@drawable/color_button"
-            android:contentDescription="Orange" />
+            android:contentDescription="@string/orange"
+            android:padding="16dp" />
     </GridLayout>
 
     <Button
         android:id="@+id/cancel_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancel"
+        android:text="@string/cancel"
         android:layout_marginTop="16dp"
         android:background="?attr/selectableItemBackground"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        android:padding="16dp" />
 </LinearLayout>

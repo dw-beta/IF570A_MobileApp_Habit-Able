@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/default_background">
 
@@ -27,46 +27,47 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="24sp"
-                android:text="Drink Water"
+                android:text="@string/drink_water_title"
                 android:textColor="@color/white" />
         </LinearLayout>
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:scaleType="centerCrop"
-        android:layout_margin="45px"
-        android:padding="20px"
-        android:src="@drawable/drink"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:padding="20dp"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:text="Drinking water is important for your health. It helps maintain the balance of bodily fluids, regulates body temperature, and aids digestion. Drinking water can also help you lose weight by increasing your metabolism and reducing your appetite. It is recommended that you drink at least 8 glasses of water a day to stay hydrated and healthy."/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="centerCrop"
+            android:layout_margin="45px"
+            android:padding="20px"
+            android:src="@drawable/drink"/>
 
-    <Button
-        android:id="@+id/startdrink"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/button_background"
-        android:padding="20dp"
-        android:textSize="20sp"
-        android:text="Start"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="20dp"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:text="@string/drink_water_description"/>
 
-    <Button
-        android:id="@+id/backtojourney"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/button_background"
-        android:padding="20dp"
-        android:textSize="20sp"
-        android:text="Cancel"/>
+        <Button
+            android:id="@+id/startdrink"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/button_background"
+            android:padding="20dp"
+            android:textSize="20sp"
+            android:text="@string/start_button_text"/>
+
+        <Button
+            android:id="@+id/backtojourney"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/gradient_background_blue"
+            android:padding="20dp"
+            android:textSize="20sp"
+            android:text="@string/cancel_button_text"/>
     </LinearLayout>
 </ScrollView>

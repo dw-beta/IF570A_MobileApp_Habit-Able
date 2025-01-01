@@ -27,7 +27,7 @@
                 android:textSize="32sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
-                android:text="Your Journey Starts Here!" />
+                android:text="@string/journey_header_text" />
         </LinearLayout>
 
         <!-- Button Section -->
@@ -56,8 +56,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:backgroundTint="@color/button_background"
-                    android:text="Say Goodbye to Sugar"
+                    android:background="@drawable/gradient_background_blue"
+                    android:text="@string/button_text_sugar"
                     android:textSize="18sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -86,8 +86,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:backgroundTint="@color/button_background"
-                    android:text="Exercise and Snooze"
+                    android:background="@drawable/gradient_background_blue"
+                    android:text="@string/button_text_exercise"
                     android:textSize="18sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -116,8 +116,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:backgroundTint="@color/button_background"
-                    android:text="Meditation for Peace"
+                    android:background="@drawable/gradient_background_blue"
+                    android:text="@string/button_text_meditation"
                     android:textSize="18sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -146,8 +146,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:backgroundTint="@color/button_background"
-                    android:text="Drink 2L Water Daily"
+                    android:background="@drawable/gradient_background_blue"
+                    android:text="@string/button_text_water"
                     android:textSize="18sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>

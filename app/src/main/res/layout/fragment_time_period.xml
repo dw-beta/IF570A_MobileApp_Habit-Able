@@ -29,243 +29,306 @@
             android:layout_marginStart="16dp" />
     </LinearLayout>
 
-    <!-- Morning Box -->
+    <!-- Morning Section -->
+    <TextView
+        android:id="@+id/morning_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/morning"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp" />
+
     <LinearLayout
-        android:id="@+id/morning_box"
+        android:id="@+id/morning_start_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/gradient_background"
         android:orientation="horizontal"
+        android:background="@drawable/gradient_background"
         android:padding="16dp"
+        android:layout_marginTop="8dp"
         android:clickable="true"
         android:focusable="true">
 
         <TextView
-            android:id="@+id/morning_label"
+            android:id="@+id/start_at_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/morning"
+            android:text="@string/start_at"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/morning_start_time"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:gravity="end">
+            android:layout_marginStart="8dp"
+            android:text="@string/morning_time"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/start_at_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/start_at"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginStart="8dp" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-            <TextView
-                android:id="@+id/morning_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/morning_time"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
-
-            <ImageButton
-                android:id="@+id/forward_button_morning"
-                android:src="@drawable/ic_forward"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/forward"
-                android:padding="8dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="8dp"
-                android:layout_width="18sp"
-                android:layout_height="18sp" />
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/forward_button_morning_start"
+            android:layout_width="18sp"
+            android:layout_height="18sp"
+            android:layout_gravity="center_vertical"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/forward"
+            android:padding="8dp"
+            android:src="@drawable/ic_forward" />
     </LinearLayout>
 
-    <!-- Afternoon Box -->
     <LinearLayout
-        android:id="@+id/afternoon_box"
+        android:id="@+id/morning_end_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@drawable/gradient_background"
         android:padding="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:clickable="true"
         android:focusable="true">
 
         <TextView
-            android:id="@+id/afternoon_label"
+            android:id="@+id/end_at_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/afternoon"
+            android:text="@string/end_at"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/morning_end_time"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:gravity="end">
+            android:layout_marginStart="8dp"
+            android:text="@string/morning_time"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/afternoon_start_at_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/start_at"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginStart="8dp" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-            <TextView
-                android:id="@+id/afternoon_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/afternoon_time"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
-
-            <ImageButton
-                android:id="@+id/forward_button_afternoon"
-                android:src="@drawable/ic_forward"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/forward"
-                android:padding="8dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="8dp"
-                android:layout_width="18sp"
-                android:layout_height="18sp" />
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/forward_button_morning_end"
+            android:layout_width="18sp"
+            android:layout_height="18sp"
+            android:layout_gravity="center_vertical"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/forward"
+            android:padding="8dp"
+            android:src="@drawable/ic_forward" />
     </LinearLayout>
 
-    <!-- Evening Box -->
+    <!-- Afternoon Section -->
+    <TextView
+        android:id="@+id/afternoon_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/afternoon"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp" />
+
     <LinearLayout
-        android:id="@+id/evening_box"
+        android:id="@+id/afternoon_start_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@drawable/gradient_background"
         android:padding="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:clickable="true"
         android:focusable="true">
 
         <TextView
-            android:id="@+id/evening_label"
+            android:id="@+id/afternoon_start_at_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/evening"
+            android:text="@string/start_at"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/afternoon_start_time"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:gravity="end">
+            android:layout_marginStart="8dp"
+            android:text="@string/afternoon_time"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/evening_start_at_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/start_at"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginStart="8dp" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-            <TextView
-                android:id="@+id/evening_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/evening_time"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
-
-            <ImageButton
-                android:id="@+id/forward_button_evening"
-                android:src="@drawable/ic_forward"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/forward"
-                android:padding="8dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="8dp"
-                android:layout_width="18sp"
-                android:layout_height="18sp" />
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/forward_button_afternoon_start"
+            android:layout_width="18sp"
+            android:layout_height="18sp"
+            android:layout_gravity="center_vertical"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/forward"
+            android:padding="8dp"
+            android:src="@drawable/ic_forward" />
     </LinearLayout>
 
-    <!-- End of the Day Box -->
     <LinearLayout
-        android:id="@+id/end_of_day_box"
+        android:id="@+id/afternoon_end_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@drawable/gradient_background"
         android:padding="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:clickable="true"
         android:focusable="true">
 
         <TextView
-            android:id="@+id/end_of_day_label"
+            android:id="@+id/afternoon_end_at_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/end_of_day"
+            android:text="@string/end_at"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/afternoon_end_time"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:gravity="end">
+            android:layout_marginStart="8dp"
+            android:text="@string/afternoon_time"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/end_of_day_start_at_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/start_at"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginStart="8dp" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-            <TextView
-                android:id="@+id/end_of_day_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/end_of_day_time"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
+        <ImageButton
+            android:id="@+id/forward_button_afternoon_end"
+            android:layout_width="18sp"
+            android:layout_height="18sp"
+            android:layout_gravity="center_vertical"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/forward"
+            android:padding="8dp"
+            android:src="@drawable/ic_forward" />
+    </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/forward_button_end_of_day"
-                android:src="@drawable/ic_forward"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/forward"
-                android:padding="8dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="8dp"
-                android:layout_width="18sp"
-                android:layout_height="18sp" />
-        </LinearLayout>
+    <!-- Evening Section -->
+    <TextView
+        android:id="@+id/evening_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/evening"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp" />
+
+    <LinearLayout
+        android:id="@+id/evening_start_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/gradient_background"
+        android:padding="16dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <TextView
+            android:id="@+id/evening_start_at_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/start_at"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/evening_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/evening_time"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/forward_button_evening_start"
+            android:layout_width="18sp"
+            android:layout_height="18sp"
+            android:layout_gravity="center_vertical"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/forward"
+            android:padding="8dp"
+            android:src="@drawable/ic_forward" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/evening_end_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/gradient_background"
+        android:padding="16dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <TextView
+            android:id="@+id/evening_end_at_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/end_at"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/evening_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/evening_time"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/forward_button_evening_end"
+            android:layout_width="18sp"
+            android:layout_height="18sp"
+            android:layout_gravity="center_vertical"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/forward"
+            android:padding="8dp"
+            android:src="@drawable/ic_forward" />
     </LinearLayout>
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.example.uts_lec
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,6 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -31,6 +31,11 @@ class TodayFragment : Fragment() {
 
     private var currentDate: Date = Date() // Initialize with today's date
 
+    private lateinit var anytimeButton: Button
+    private lateinit var morningButton: Button
+    private lateinit var afternoonButton: Button
+    private lateinit var eveningButton: Button
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,16 +48,21 @@ class TodayFragment : Fragment() {
         dateTextView = view.findViewById(R.id.dateTextView)
         monthNameTextView = view.findViewById(R.id.monthNameTextView)
 
+        anytimeButton = view.findViewById(R.id.anytimeButton)
+        morningButton = view.findViewById(R.id.morningButton)
+        afternoonButton = view.findViewById(R.id.afternoonButton)
+        eveningButton = view.findViewById(R.id.eveningButton)
+
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         if (userId != null) {
             habitAdapter = HabitAdapter(habitList, userId)
             recyclerViewHabits.adapter = habitAdapter
 
-            // Fetch habits for the default filter when the fragment loads
-            fetchHabits(userId, "Anytime") // Default category, change as needed
+            // Automatically select the appropriate filter based on the current time
+            selectAppropriateFilter(userId)
 
             // Set up button listeners
-            setupTimeFilterButtons(view, userId)
+            setupTimeFilterButtons(userId)
         } else {
             Toast.makeText(context, "User not logged in", Toast.LENGTH_SHORT).show()
         }
@@ -70,11 +80,8 @@ class TodayFragment : Fragment() {
         // Set up the arrow buttons
         setupArrowButtons(view)
 
-        // Listen for results from CreateHabitFragment
-        setFragmentResultListener("requestKey") { _, bundle ->
-            val result = bundle.getString("bundleKey")
-            // Handle the result here
-        }
+        // Initially display today's date
+        updateDateDisplay()
 
         return view
     }
@@ -111,30 +118,75 @@ class TodayFragment : Fragment() {
         monthNameTextView.text = monthFormat.format(currentDate) // Show the month name
     }
 
-    private fun setupTimeFilterButtons(view: View, userId: String) {
-        val anytimeButton: Button = view.findViewById(R.id.anytimeButton)
-        val morningButton: Button = view.findViewById(R.id.morningButton)
-        val afternoonButton: Button = view.findViewById(R.id.afternoonButton)
-        val eveningButton: Button = view.findViewById(R.id.eveningButton)
-
+    private fun setupTimeFilterButtons(userId: String) {
         anytimeButton.setOnClickListener {
+            updateButtonBackgrounds("Anytime")
             fetchHabits(userId, "Anytime")
         }
         morningButton.setOnClickListener {
+            updateButtonBackgrounds("Morning")
             fetchHabits(userId, "Morning")
         }
         afternoonButton.setOnClickListener {
+            updateButtonBackgrounds("Afternoon")
             fetchHabits(userId, "Afternoon")
         }
         eveningButton.setOnClickListener {
+            updateButtonBackgrounds("Evening")
             fetchHabits(userId, "Evening")
         }
     }
 
+    private fun updateButtonBackgrounds(selectedFilter: String) {
+        val defaultBackground = R.drawable.gradient_background
+        val selectedBackground = R.drawable.gradient_background_blue
+
+        anytimeButton.setBackgroundResource(if (selectedFilter == "Anytime") selectedBackground else defaultBackground)
+        morningButton.setBackgroundResource(if (selectedFilter == "Morning") selectedBackground else defaultBackground)
+        afternoonButton.setBackgroundResource(if (selectedFilter == "Afternoon") selectedBackground else defaultBackground)
+        eveningButton.setBackgroundResource(if (selectedFilter == "Evening") selectedBackground else defaultBackground)
+    }
+
+    private fun selectAppropriateFilter(userId: String) {
+        val sharedPreferences = requireContext().getSharedPreferences("TimePeriods", Context.MODE_PRIVATE)
+        val morningStart = sharedPreferences.getString("morning_start", "09:00") ?: "09:00"
+        val morningEnd = sharedPreferences.getString("morning_end", "12:00") ?: "12:00"
+        val afternoonStart = sharedPreferences.getString("afternoon_start", "12:00") ?: "12:00"
+        val afternoonEnd = sharedPreferences.getString("afternoon_end", "18:00") ?: "18:00"
+        val eveningStart = sharedPreferences.getString("evening_start", "15:00") ?: "15:00"
+        val eveningEnd = sharedPreferences.getString("evening_end", "23:00") ?: "23:00"
+
+        val currentTime = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
+
+        val doItAt = when {
+            currentTime >= morningStart && currentTime < morningEnd -> "Morning"
+            currentTime >= afternoonStart && currentTime < afternoonEnd -> "Afternoon"
+            currentTime >= eveningStart && currentTime < eveningEnd -> "Evening"
+            else -> "Anytime"
+        }
+
+        updateButtonBackgrounds(doItAt)
+        fetchHabits(userId, doItAt)
+    }
+
     private fun fetchHabits(userId: String, doItAt: String) {
+        val sharedPreferences = requireContext().getSharedPreferences("TimePeriods", Context.MODE_PRIVATE)
+        val morningStart = sharedPreferences.getString("morning_start", "09:00") ?: "09:00"
+        val morningEnd = sharedPreferences.getString("morning_end", "12:00") ?: "12:00"
+        val afternoonStart = sharedPreferences.getString("afternoon_start", "12:00") ?: "12:00"
+        val afternoonEnd = sharedPreferences.getString("afternoon_end", "18:00") ?: "18:00"
+        val eveningStart = sharedPreferences.getString("evening_start", "15:00") ?: "15:00"
+        val eveningEnd = sharedPreferences.getString("evening_end", "23:00") ?: "23:00"
+
+        val timeRange = when (doItAt) {
+            "Morning" -> morningStart to morningEnd
+            "Afternoon" -> afternoonStart to afternoonEnd
+            "Evening" -> eveningStart to eveningEnd
+            else -> null
+        }
+
         db.collection("habitcreated")
             .whereEqualTo("userId", userId)
-            .whereEqualTo("doItAt", doItAt)
             .addSnapshotListener { result, error ->
                 if (error != null) {
                     Toast.makeText(context, "Failed to fetch habits", Toast.LENGTH_SHORT).show()
@@ -150,17 +202,20 @@ class TodayFragment : Fragment() {
                         val dateCompleted = document.getDate("dateCompleted")
                         val isCompleted = document.getBoolean("isCompleted") ?: false
                         val color = document.getString("color") ?: "#18C6FD" // Default color if not specified
+                        val doItAtTime = document.getString("doItAtTime") ?: "00:00"
 
-                        val habitData = mapOf(
-                            "habitId" to document.id,
-                            "customHabitName" to habitName,
-                            "description" to description,
-                            "dateCreated" to dateCreated,
-                            "dateCompleted" to dateCompleted,
-                            "isCompleted" to isCompleted,
-                            "color" to color // Add the color field
-                        )
-                        habitList.add(habitData)
+                        if (timeRange == null || (doItAtTime >= timeRange.first && doItAtTime < timeRange.second)) {
+                            val habitData = mapOf(
+                                "habitId" to document.id,
+                                "customHabitName" to habitName,
+                                "description" to description,
+                                "dateCreated" to dateCreated,
+                                "dateCompleted" to dateCompleted,
+                                "isCompleted" to isCompleted,
+                                "color" to color // Add the color field
+                            )
+                            habitList.add(habitData)
+                        }
                     }
                     habitAdapter.notifyDataSetChanged()
 

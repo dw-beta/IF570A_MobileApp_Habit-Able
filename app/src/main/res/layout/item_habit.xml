@@ -7,18 +7,23 @@
     android:background="@drawable/habit_history_background"
     android:orientation="horizontal">
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:padding="20dp"
-        android:contentDescription="@string/sleep_icon"
-        android:src="@drawable/baseline_bedtime_24"/>
+    <CheckBox
+        android:id="@+id/habitCompletedCheckBox"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:layout_marginStart="16dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:contentDescription="@string/completed"/>
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/habitNameTextView"
@@ -33,28 +38,12 @@
             android:textSize="24sp"
             android:textStyle="bold"
             android:maxLines="1"
-            android:ellipsize="end" />
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:layout_marginEnd="10dp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="top"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:text="Everyday"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+
     </LinearLayout>
-
-    <CheckBox
-        android:id="@+id/habitCompletedCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
-        android:paddingEnd="10dp"
-        android:text="Completed"
-        android:textColor="@color/white"/>
 
     <ImageButton
         android:id="@+id/menuButton"

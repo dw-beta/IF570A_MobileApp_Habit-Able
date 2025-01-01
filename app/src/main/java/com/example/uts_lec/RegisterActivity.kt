@@ -6,12 +6,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
+import android.content.Context
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -23,6 +22,11 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var confirmPasswordEditText: EditText
     private lateinit var registerButton: Button
     private lateinit var loginTextView: TextView
+
+    override fun attachBaseContext(newBase: Context) {
+        val context = LocaleHelper.setLocale(newBase, LocaleHelper.getLocale(newBase).language)
+        super.attachBaseContext(context)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,27 +94,25 @@ class RegisterActivity : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Save additional user info to Firebase Database
+                    // Save additional user info to Firestore
                     val user = auth.currentUser
-                    val userRef = database.getReference("users/${user?.uid}")
+                    val userRef = FirebaseFirestore.getInstance().collection("users").document(user?.uid ?: "")
                     val userData = hashMapOf(
                         "name" to name,
                         "idNumber" to idNumber,
                         "email" to email
                     )
 
-                    userRef.setValue(userData).addOnCompleteListener { dbTask ->
+                    userRef.set(userData).addOnCompleteListener { dbTask ->
                         if (dbTask.isSuccessful) {
                             startActivity(Intent(this, LoginActivity::class.java))
                             finish()
                         } else {
-                            Toast.makeText(baseContext, "Failed to save user data.",
-                                Toast.LENGTH_SHORT).show()
+                            Toast.makeText(baseContext, "Failed to save user data.", Toast.LENGTH_SHORT).show()
                         }
                     }
                 } else {
-                    Toast.makeText(baseContext, "Registration failed.",
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(baseContext, "Registration failed.", Toast.LENGTH_SHORT).show()
                 }
             }
     }

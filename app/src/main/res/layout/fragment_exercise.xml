@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/default_background">
 
@@ -27,48 +27,47 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="24sp"
-                android:text="Exercise"
+                android:text="@string/exercise_title"
                 android:textColor="@color/white" />
         </LinearLayout>
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="centerCrop"
+            android:layout_margin="45px"
+            android:padding="20px"
+            android:src="@drawable/exercise"/>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:scaleType="centerCrop"
-        android:layout_margin="45px"
-        android:padding="20px"
-        android:src="@drawable/exercise"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="20dp"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:text="@string/exercise_description"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:padding="20dp"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:text="Exercise is any bodily activity that enhances or maintains physical fitness and overall health and wellness. It is performed for various reasons, to aid growth and improve strength, prevent aging, develop muscles and the cardiovascular system, hone athletic skills, weight loss or maintenance, improve health, or simply for enjoyment. Exercise is a vital part of a healthy lifestyle and can help prevent a number of diseases."/>
+        <Button
+            android:id="@+id/startexercise"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/button_background"
+            android:padding="20dp"
+            android:textSize="20sp"
+            android:text="@string/start_button_text"/>
 
-    <Button
-        android:id="@+id/startexercise"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/button_background"
-        android:padding="20dp"
-        android:textSize="20sp"
-        android:text="Start"/>
-
-    <Button
-        android:id="@+id/backtojourney"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/button_background"
-        android:padding="20dp"
-        android:textSize="20sp"
-        android:text="Cancel"/>
+        <Button
+            android:id="@+id/backtojourney"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/gradient_background_blue"
+            android:padding="20dp"
+            android:textSize="20sp"
+            android:text="@string/cancel_button_text"/>
     </LinearLayout>
 </ScrollView>

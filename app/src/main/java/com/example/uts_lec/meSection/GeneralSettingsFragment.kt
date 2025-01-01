@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.example.uts_lec.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class GeneralSettingsFragment : Fragment() {
     override fun onCreateView(
@@ -21,30 +24,63 @@ class GeneralSettingsFragment : Fragment() {
             parentFragmentManager.popBackStack()
         }
 
-        val firstDayOfWeek = view.findViewById<View>(R.id.first_day_of_week)
-        firstDayOfWeek.setOnClickListener {
-            val bottomSheet = FirstDayOfWeekBottomSheet()
-            bottomSheet.show(parentFragmentManager, "FirstDayOfWeekBottomSheet")
+        val deleteAllData = view.findViewById<View>(R.id.delete_all_data)
+        deleteAllData.setOnClickListener {
+            showDeleteConfirmationDialog()
         }
 
         val timePeriod = view.findViewById<View>(R.id.time_period)
         timePeriod.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, TimePeriodFragment())
+                .replace(this.id, TimePeriodFragment())
                 .addToBackStack(null)
                 .commit()
         }
 
-        val privacyPolicy = view.findViewById<View>(R.id.privacy_policy)
-        privacyPolicy.setOnClickListener {
-            // Handle privacy policy click
-        }
-
-        val deleteAllData = view.findViewById<View>(R.id.delete_all_data)
-        deleteAllData.setOnClickListener {
-            // Handle delete all data click
-        }
-
         return view
+    }
+
+    private fun showDeleteConfirmationDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Delete All Data")
+            .setMessage("Do you want to delete all data? All your habits and progress will be lost.")
+            .setPositiveButton("Yes") { _, _ ->
+                deleteAllUserData()
+            }
+            .setNegativeButton("No", null)
+            .show()
+    }
+
+    private fun deleteAllUserData() {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        if (userId != null) {
+            val db = FirebaseFirestore.getInstance()
+            val batch = db.batch()
+
+            val habitCreatedRef = db.collection("habitcreated").whereEqualTo("userId", userId)
+            val habitSucceededRef = db.collection("habitsucceeded").whereEqualTo("userId", userId)
+
+            habitCreatedRef.get().addOnSuccessListener { createdDocuments ->
+                for (document in createdDocuments) {
+                    batch.delete(document.reference)
+                }
+                habitSucceededRef.get().addOnSuccessListener { succeededDocuments ->
+                    for (document in succeededDocuments) {
+                        batch.delete(document.reference)
+                    }
+                    batch.commit().addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            requireActivity().runOnUiThread {
+                                Toast.makeText(requireContext(), "All data deleted successfully", Toast.LENGTH_SHORT).show()
+                            }
+                        } else {
+                            requireActivity().runOnUiThread {
+                                Toast.makeText(requireContext(), "Failed to delete data", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

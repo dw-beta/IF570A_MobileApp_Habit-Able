@@ -18,10 +18,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Achievement Name"
+        android:text="@string/achievement_name"
         android:textColor="@color/white"
         android:textSize="24sp"
-        android:textStyle='bold'
+        android:textStyle="bold"
         android:gravity="center"
         android:paddingTop="8dp" />
 
@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Finish [data.requirement] habit/s"
+        android:text="@string/achievement_requirement"
         android:textColor="@color/white"
         android:textSize="12sp"
         android:gravity="center"

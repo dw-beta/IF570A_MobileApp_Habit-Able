@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/default_background"
     tools:context=".TodayFragment"
@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="TODAY"
+            android:text="@string/today"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/white"/>
@@ -40,53 +40,49 @@
             android:id="@+id/monthNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Month Name"
+            android:text="@string/month_name"
             android:textSize="20sp"
             android:textColor="@color/white"
             android:layout_marginBottom="8dp"
             android:gravity="center_horizontal"/>
 
         <!-- Dates and Arrow Buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="20dp">
 
-
-            <LinearLayout
+            <ImageButton
+                android:id="@+id/leftArrowButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="20dp">
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/previous_month"
+                android:src="@drawable/ic_arrow_left"
+                tools:ignore="TouchTargetSizeCheck" />
 
-                <ImageButton
-                    android:id="@+id/leftArrowButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:contentDescription="Previous Month"
-                    android:src="@drawable/ic_arrow_left"
-                    tools:ignore="TouchTargetSizeCheck" />
+            <TextView
+                android:id="@+id/dateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date_text"
+                android:textSize="24sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_marginTop="1dp"
+                android:layout_gravity="center"/>
 
-                <TextView
-                    android:id="@+id/dateTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="01 Jan 2024"
-                    android:textSize="24sp"
-                    android:textColor="@color/white"
-                    android:gravity="center"
-                    android:layout_marginTop="1dp"
-                    android:layout_gravity="center"/>
-
-                <ImageButton
-                    android:id="@+id/rightArrowButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:contentDescription="Next Month"
-                    android:src="@drawable/ic_arrow_right"
-                    tools:ignore="TouchTargetSizeCheck" />
-            </LinearLayout>
-
-
+            <ImageButton
+                android:id="@+id/rightArrowButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/next_month"
+                android:src="@drawable/ic_arrow_right"
+                tools:ignore="TouchTargetSizeCheck" />
+        </LinearLayout>
     </LinearLayout>
 
     <!-- Horizontal Scroll View for Habit Time Selection Buttons -->
@@ -96,7 +92,7 @@
         android:scrollbars="horizontal">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
@@ -104,41 +100,51 @@
 
             <Button
                 android:id="@+id/anytimeButton"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Anytime"
+                android:layout_weight="1"
+                android:text="@string/anytime"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/button_background"
-                android:layout_marginEnd="16dp"/>
+                android:background="@drawable/gradient_background"
+                android:layout_marginEnd="16dp"
+                android:padding="12dp"
+                android:minWidth="110dp"/>
 
             <Button
                 android:id="@+id/morningButton"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Morning"
+                android:layout_weight="1"
+                android:text="@string/morning"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/button_background"
-                android:layout_marginEnd="16dp"/>
+                android:background="@drawable/gradient_background"
+                android:layout_marginEnd="16dp"
+                android:padding="12dp"
+                android:minWidth="110dp"/>
 
             <Button
                 android:id="@+id/afternoonButton"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Afternoon"
+                android:layout_weight="1"
+                android:text="@string/afternoon"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/button_background"
-                android:layout_marginEnd="16dp"/>
+                android:background="@drawable/gradient_background"
+                android:layout_marginEnd="16dp"
+                android:padding="12dp"
+                android:minWidth="110dp"/>
 
             <Button
                 android:id="@+id/eveningButton"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/button_background"
-                android:minWidth="48dp"
-                android:text="Evening"
-                android:textColor="@color/white" />
+                android:layout_weight="1"
+                android:background="@drawable/gradient_background"
+                android:minWidth="110dp"
+                android:text="@string/evening"
+                android:textColor="@color/white"
+                android:padding="12dp"/>
         </LinearLayout>
-
     </HorizontalScrollView>
 
     <!-- Separator Line -->
@@ -161,7 +167,7 @@
         android:id="@+id/emptyTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="You haven't added any habits yet"
+        android:text="@string/no_habits"
         android:textSize="18sp"
         android:gravity="center"
         android:visibility="gone"
@@ -175,8 +181,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:backgroundTint="@color/button_background"
+        android:background="@drawable/gradient_background_blue"
         android:padding="20dp"
-        android:text="CREATE A NEW HABIT"
+        android:text="@string/create_habit"
         android:textSize="20sp"/>
 </LinearLayout>

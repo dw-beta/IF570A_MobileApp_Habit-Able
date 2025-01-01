@@ -17,7 +17,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Calendar
 import java.util.Date
 
-
 private const val TAG = "HistoryFragment"
 
 class HistoryFragment : Fragment() {
@@ -67,21 +66,17 @@ class HistoryFragment : Fragment() {
     private fun fetchHabitStatistics() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
-        if (userId != null) {
-            db.collection("habitsucceeded")
-                .whereEqualTo("userId", userId) // Filter by userId
-                .get()
-                .addOnSuccessListener { querySnapshot ->
-                    val completedList = querySnapshot.documents.map { it.data ?: emptyMap<String, Any?>() }
-                    updateCompletedHabits(completedList)
-                    calculateStatistics(completedList, userId)
-                }
-                .addOnFailureListener {
-                    Toast.makeText(requireContext(), "Failed to fetch completed habits.", Toast.LENGTH_SHORT).show()
-                }
-        } else {
-            Toast.makeText(requireContext(), "User not logged in.", Toast.LENGTH_SHORT).show()
-        }
+        db.collection("habitsucceeded")
+            .whereEqualTo("userId", userId) // Filter by userId
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val completedList = querySnapshot.documents.map { it.data ?: emptyMap<String, Any?>() }
+                updateCompletedHabits(completedList)
+                calculateStatistics(completedList, userId)
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Failed to fetch completed habits.", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun updateCompletedHabits(completedList: List<Map<String, Any>>) {

@@ -26,7 +26,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="24sp"
-                android:text="Bye Sugar"
+                android:text="@string/bye_sugar_title"
                 android:textColor="@color/white" />
         </LinearLayout>
 
@@ -45,7 +45,7 @@
             android:padding="20dp"
             android:textSize="20sp"
             android:textColor="@color/white"
-            android:text="Sugar is a type of carbohydrate that occurs naturally in foods such as fruits, vegetables, and dairy. Manufacturers also add sugar to many processed foods and drinks. Sugar is a carbohydrate that the body converts into glucose, which it uses for energy. When people eat sugar, the body uses it as a source of energy. However, eating too much sugar can lead to weight gain, tooth decay, and an increased risk of heart disease. Sugar is also linked to an increased risk of type 2 diabetes. Cutting back on sugar can help people lose weight, reduce their risk of heart disease, and lower their risk of type 2 diabetes." />
+            android:text="@string/bye_sugar_description" />
 
         <Button
             android:id="@+id/startbyesugar"
@@ -56,7 +56,7 @@
             android:backgroundTint="@color/button_background"
             android:padding="20dp"
             android:textSize="20sp"
-            android:text="Start" />
+            android:text="@string/start_button_text" />
 
         <Button
             android:id="@+id/backtojourney"
@@ -64,9 +64,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:backgroundTint="@color/button_background"
+            android:background="@drawable/gradient_background_blue"
             android:padding="20dp"
             android:textSize="20sp"
-            android:text="Cancel" />
+            android:text="@string/cancel_button_text" />
     </LinearLayout>
 </ScrollView>

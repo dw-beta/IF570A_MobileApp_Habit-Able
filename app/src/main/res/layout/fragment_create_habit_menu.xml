@@ -55,9 +55,8 @@
 
             <EditText
                 android:id="@+id/habitNameEditText"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:layout_weight="1"
                 android:background="#2A2E3B"
                 android:layout_marginStart="8dp"
                 android:padding="8dp"
@@ -159,9 +158,8 @@
 
             <Button
                 android:id="@+id/anytime_button"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
                 android:text="@string/anytime_button_text"
                 android:background="@drawable/button_background_selector"
                 android:layout_margin="8dp"
@@ -170,9 +168,8 @@
 
             <Button
                 android:id="@+id/morning_button"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
                 android:text="@string/morning_button_text"
                 android:background="@drawable/button_background_selector"
                 android:layout_margin="8dp"
@@ -181,9 +178,8 @@
 
             <Button
                 android:id="@+id/afternoon_button"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
                 android:text="@string/afternoon_button_text"
                 android:background="@drawable/button_background_selector"
                 android:layout_margin="8dp"
@@ -192,9 +188,8 @@
 
             <Button
                 android:id="@+id/evening_button"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
                 android:text="@string/evening_button_text"
                 android:background="@drawable/button_background_selector"
                 android:layout_margin="8dp"
@@ -241,7 +236,7 @@
         <!-- Encouragement Text Field -->
         <EditText
             android:id="@+id/encouragement_text"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:background="@drawable/gradient_background"
             android:layout_marginTop="8dp"
