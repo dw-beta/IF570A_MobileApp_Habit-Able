@@ -58,7 +58,7 @@ class NotificationFragment : Fragment() {
         val backButton = view.findViewById<ImageButton>(R.id.back_button)
         backButton.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, MeFragment())
+                .replace(R.id.frame_layout, MeSignInFragment())
                 .addToBackStack(null)
                 .commit()
         }

@@ -170,23 +170,9 @@ class TodayFragment : Fragment() {
     }
 
     private fun fetchHabits(userId: String, doItAt: String) {
-        val sharedPreferences = requireContext().getSharedPreferences("TimePeriods", Context.MODE_PRIVATE)
-        val morningStart = sharedPreferences.getString("morning_start", "09:00") ?: "09:00"
-        val morningEnd = sharedPreferences.getString("morning_end", "12:00") ?: "12:00"
-        val afternoonStart = sharedPreferences.getString("afternoon_start", "12:00") ?: "12:00"
-        val afternoonEnd = sharedPreferences.getString("afternoon_end", "18:00") ?: "18:00"
-        val eveningStart = sharedPreferences.getString("evening_start", "15:00") ?: "15:00"
-        val eveningEnd = sharedPreferences.getString("evening_end", "23:00") ?: "23:00"
-
-        val timeRange = when (doItAt) {
-            "Morning" -> morningStart to morningEnd
-            "Afternoon" -> afternoonStart to afternoonEnd
-            "Evening" -> eveningStart to eveningEnd
-            else -> null
-        }
-
         db.collection("habitcreated")
             .whereEqualTo("userId", userId)
+            .whereEqualTo("doItAt", doItAt)
             .addSnapshotListener { result, error ->
                 if (error != null) {
                     Toast.makeText(context, "Failed to fetch habits", Toast.LENGTH_SHORT).show()
@@ -202,20 +188,17 @@ class TodayFragment : Fragment() {
                         val dateCompleted = document.getDate("dateCompleted")
                         val isCompleted = document.getBoolean("isCompleted") ?: false
                         val color = document.getString("color") ?: "#18C6FD" // Default color if not specified
-                        val doItAtTime = document.getString("doItAtTime") ?: "00:00"
 
-                        if (timeRange == null || (doItAtTime >= timeRange.first && doItAtTime < timeRange.second)) {
-                            val habitData = mapOf(
-                                "habitId" to document.id,
-                                "customHabitName" to habitName,
-                                "description" to description,
-                                "dateCreated" to dateCreated,
-                                "dateCompleted" to dateCompleted,
-                                "isCompleted" to isCompleted,
-                                "color" to color // Add the color field
-                            )
-                            habitList.add(habitData)
-                        }
+                        val habitData = mapOf(
+                            "habitId" to document.id,
+                            "customHabitName" to habitName,
+                            "description" to description,
+                            "dateCreated" to dateCreated,
+                            "dateCompleted" to dateCompleted,
+                            "isCompleted" to isCompleted,
+                            "color" to color // Add the color field
+                        )
+                        habitList.add(habitData)
                     }
                     habitAdapter.notifyDataSetChanged()
 
