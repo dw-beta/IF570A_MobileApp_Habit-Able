@@ -1,7 +1,6 @@
 package com.example.uts_lec
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -71,7 +70,7 @@ class HabitAdapter(
         holder.habitCheckBox.isChecked = habitData["completionStatus"] as? Boolean ?: false
         holder.habitCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                moveToHabitsSucceeded(habitData, position)
+                markHabitAsCompleted(habitData, position)
             }
         }
 
@@ -92,7 +91,7 @@ class HabitAdapter(
         return habitList.size
     }
 
-    private fun moveToHabitsSucceeded(habitData: Map<String, Any?>, position: Int) {
+    private fun markHabitAsCompleted(habitData: Map<String, Any?>, position: Int) {
         val habitId = habitData["habitId"] as String? // Ensure habit ID is in your data structure
 
         if (habitId != null) {
@@ -100,20 +99,19 @@ class HabitAdapter(
                 put("completionStatus", true) // Set completionStatus to true
                 put("completionDate", com.google.firebase.Timestamp.now()) // Save the current completion date
                 put("userId", userId) // Save the user ID
-                remove("isCompleted") // Ensure no "isCompleted" field is added
             }
 
-            // Remove from the "habitcreated" collection
+            // Update the habit in the "habitcreated" collection
             db.collection("habitcreated").document(habitId)
-                .delete()
+                .update(updatedHabitData)
                 .addOnSuccessListener {
                     // Add to "habitsucceeded" collection
                     db.collection("habitsucceeded").add(updatedHabitData)
                         .addOnSuccessListener {
-                            // Successfully added to "habitsucceeded", now remove from habitList
+                            // Successfully added to "habitsucceeded", now update the habit in habitList
                             if (position < habitList.size) {
-                                habitList.removeAt(position)
-                                notifyItemRemoved(position)
+                                habitList[position] = updatedHabitData
+                                notifyItemChanged(position)
                             }
                         }
                         .addOnFailureListener {

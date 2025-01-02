@@ -173,6 +173,7 @@ class TodayFragment : Fragment() {
         db.collection("habitcreated")
             .whereEqualTo("userId", userId)
             .whereEqualTo("doItAt", doItAt)
+            .whereEqualTo("completionStatus", false) // Only fetch habits with completionStatus set to false
             .addSnapshotListener { result, error ->
                 if (error != null) {
                     Toast.makeText(context, "Failed to fetch habits", Toast.LENGTH_SHORT).show()
@@ -186,7 +187,7 @@ class TodayFragment : Fragment() {
                         val description = document.getString("description") ?: ""
                         val dateCreated = document.getDate("dateCreated") ?: Date()
                         val dateCompleted = document.getDate("dateCompleted")
-                        val isCompleted = document.getBoolean("isCompleted") ?: false
+                        val isCompleted = document.getBoolean("completionStatus") ?: false
                         val color = document.getString("color") ?: "#18C6FD" // Default color if not specified
 
                         val habitData = mapOf(
@@ -195,7 +196,7 @@ class TodayFragment : Fragment() {
                             "description" to description,
                             "dateCreated" to dateCreated,
                             "dateCompleted" to dateCompleted,
-                            "isCompleted" to isCompleted,
+                            "completionStatus" to isCompleted,
                             "color" to color // Add the color field
                         )
                         habitList.add(habitData)

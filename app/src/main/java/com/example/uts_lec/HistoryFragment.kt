@@ -96,6 +96,9 @@ class HistoryFragment : Fragment() {
             isInCurrentWeek(it)
         }
 
+        // Log the total habits collected
+        Log.d(TAG, "Total habits collected: $totalHabits")
+
         // Fetch total habits created
         db.collection("habitcreated").whereEqualTo("userId", userId).get()
             .addOnSuccessListener { createdHabits ->
@@ -103,6 +106,10 @@ class HistoryFragment : Fragment() {
                 val completionRate = if (totalCreated > 0) {
                     (totalHabits.toDouble() / totalCreated * 100).toInt()
                 } else 0
+
+                // Log the total habits created and the completion rate
+                Log.d(TAG, "Total habits created: $totalCreated")
+                Log.d(TAG, "Completion rate: $completionRate%")
 
                 completionRateTextView.text = "$completionRate%"
                 totalHabitsTextView.text = "$totalHabits"

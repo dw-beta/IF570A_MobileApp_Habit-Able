@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import android.content.Context
@@ -104,7 +105,11 @@ class RegisterActivity : AppCompatActivity() {
                         }
                     }
                 } else {
-                    Toast.makeText(baseContext, "Registration failed.", Toast.LENGTH_SHORT).show()
+                    if (task.exception is FirebaseAuthUserCollisionException) {
+                        emailEditText.error = "This email is already registered"
+                    } else {
+                        Toast.makeText(baseContext, "Registration failed.", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
     }
