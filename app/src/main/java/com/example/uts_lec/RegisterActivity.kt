@@ -16,7 +16,6 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
     private lateinit var nameEditText: EditText
-    private lateinit var idNumberEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var confirmPasswordEditText: EditText
@@ -38,7 +37,6 @@ class RegisterActivity : AppCompatActivity() {
 
         // Initialize views
         nameEditText = findViewById(R.id.nameEditText)
-        idNumberEditText = findViewById(R.id.idNumberEditText)
         emailEditText = findViewById(R.id.emailEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
         confirmPasswordEditText = findViewById(R.id.confirmPasswordEditText)
@@ -47,13 +45,12 @@ class RegisterActivity : AppCompatActivity() {
 
         registerButton.setOnClickListener {
             val name = nameEditText.text.toString()
-            val idNumber = idNumberEditText.text.toString()
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
             val confirmPassword = confirmPasswordEditText.text.toString()
 
-            if (validateInput(name, idNumber, email, password, confirmPassword)) {
-                registerUser(name, idNumber, email, password)
+            if (validateInput(name, email, password, confirmPassword)) {
+                registerUser(name, email, password)
             }
         }
 
@@ -62,13 +59,9 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun validateInput(name: String, idNumber: String, email: String, password: String, confirmPassword: String): Boolean {
+    private fun validateInput(name: String, email: String, password: String, confirmPassword: String): Boolean {
         if (name.isEmpty()) {
             nameEditText.error = "Name is required"
-            return false
-        }
-        if (idNumber.isEmpty()) {
-            idNumberEditText.error = "ID Number is required"
             return false
         }
         if (email.isEmpty()) {
@@ -90,7 +83,7 @@ class RegisterActivity : AppCompatActivity() {
         return true
     }
 
-    private fun registerUser(name: String, idNumber: String, email: String, password: String) {
+    private fun registerUser(name: String, email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -99,7 +92,6 @@ class RegisterActivity : AppCompatActivity() {
                     val userRef = FirebaseFirestore.getInstance().collection("users").document(user?.uid ?: "")
                     val userData = hashMapOf(
                         "name" to name,
-                        "idNumber" to idNumber,
                         "email" to email
                     )
 

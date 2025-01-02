@@ -31,19 +31,7 @@
         android:padding="16dp"
         android:layout_gravity="center_horizontal" />
 
-    <EditText
-        android:id="@+id/idNumberEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="@string/id_number_hint"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:inputType="text"
-        android:minHeight="48dp"
-        android:autofillHints="username"
-        android:padding="16dp"
-        android:layout_gravity="center_horizontal" />
+
 
     <EditText
         android:id="@+id/emailEditText"
