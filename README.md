@@ -15,6 +15,29 @@ Fitur-fitur yang sudah diimplementasikan:
      2. Journey page
      3. History page
      4. Me page
-3. Kalender (History page)
-4. Share button (Me page)
-5. Create habit (Today page) 
+3. Today page
+     1. Create habit
+     2. Date time
+     3. Filter habit berdasarkan waktu (Anytime/Morning/Afternoon/Evening
+     4. Mark as done habit
+     5. Edit habit
+     6. Delete habit
+     7. Customizeable habit (Set warna, update waktu, set reminder)
+5. Journey page
+     1. Start journey
+     2. Warning alert ketika ingin Start journey yang telah exist
+7. History page
+     1. Habits & Achievements navigation tab
+     2. Current streak tracker & Best streak
+     3. Habit finished tracker (Berapa habits yang telah diselesaikan)
+     4. Completion rate tracker (Berapa persen habit yang telah diselesaikan dari seluruh habit yang telah dibuat)
+     5. Completed habits history dalam bentuk card (Judul habit yang telah selesai dan kapan habit diselesaikan)
+     6. Achievements (Cth: Menyelesaikan habit pertama, Pernah menyelesaikan 5 habit, dst) 
+9. Me page
+     1. Profile picture & Username (Read Username from database)
+     2. NATIVE FEATURE: Camera untuk edit profile picture (Take photo/Choose from gallery)
+     4. Notification (Set reminder, time, back button)
+     5. General Setting (Delete All Data button, dan bisa set periode time Morning/Afternoon/Evening dari jam tertentu sampai jam tertentu yang berpengaruh ke Today page)
+     6. Language (Bisa mengubah bahasa dari English ke Indonesia, dan sebaliknya)
+     7. Share button
+     8. Log out button
