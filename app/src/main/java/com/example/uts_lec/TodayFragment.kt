@@ -36,6 +36,8 @@ class TodayFragment : Fragment() {
     private lateinit var afternoonButton: Button
     private lateinit var eveningButton: Button
 
+    private var currentFilter: String = "Anytime" // Default filter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -82,6 +84,11 @@ class TodayFragment : Fragment() {
 
         // Initially display today's date
         updateDateDisplay()
+
+        // Listen for habit completion updates
+        parentFragmentManager.setFragmentResultListener("habitCompleted", this) { _, _ ->
+            userId?.let { fetchHabits(it, getCurrentFilter()) }
+        }
 
         return view
     }
@@ -145,6 +152,8 @@ class TodayFragment : Fragment() {
         morningButton.setBackgroundResource(if (selectedFilter == "Morning") selectedBackground else defaultBackground)
         afternoonButton.setBackgroundResource(if (selectedFilter == "Afternoon") selectedBackground else defaultBackground)
         eveningButton.setBackgroundResource(if (selectedFilter == "Evening") selectedBackground else defaultBackground)
+
+        currentFilter = selectedFilter // Update the current filter
     }
 
     private fun selectAppropriateFilter(userId: String) {
@@ -212,5 +221,9 @@ class TodayFragment : Fragment() {
                     }
                 }
             }
+    }
+
+    private fun getCurrentFilter(): String {
+        return currentFilter
     }
 }

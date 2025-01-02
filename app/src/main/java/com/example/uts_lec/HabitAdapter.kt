@@ -34,18 +34,12 @@ class HabitAdapter(
         val habitName = habitData["customHabitName"] as String
         val colorValue = habitData["color"]
 
-        // Log the retrieved color value
-        android.util.Log.d("HabitAdapter", "Retrieved color for habit $habitName: $colorValue")
-
         var colorHex = colorValue as? String ?: "#18C6FD" // Default to start color if no color is specified
 
         // Add '#' if not present
         if (!colorHex.startsWith("#")) {
             colorHex = "#$colorHex"
         }
-
-        // Log the final color value
-        android.util.Log.d("HabitAdapter", "Final color for habit $habitName: $colorHex")
 
         // Set the habit name and handle text truncation
         holder.habitNameTextView.text = habitName
@@ -67,10 +61,11 @@ class HabitAdapter(
         }
 
         // Handle the CheckBox
+        holder.habitCheckBox.setOnCheckedChangeListener(null) // Clear any previous listener
         holder.habitCheckBox.isChecked = habitData["completionStatus"] as? Boolean ?: false
         holder.habitCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                markHabitAsCompleted(habitData, position)
+                markHabitAsCompleted(holder.itemView.context, habitData, position)
             }
         }
 
@@ -91,7 +86,7 @@ class HabitAdapter(
         return habitList.size
     }
 
-    private fun markHabitAsCompleted(habitData: Map<String, Any?>, position: Int) {
+    private fun markHabitAsCompleted(context: Context, habitData: Map<String, Any?>, position: Int) {
         val habitId = habitData["habitId"] as String? // Ensure habit ID is in your data structure
 
         if (habitId != null) {
@@ -108,11 +103,11 @@ class HabitAdapter(
                     // Add to "habitsucceeded" collection
                     db.collection("habitsucceeded").add(updatedHabitData)
                         .addOnSuccessListener {
-                            // Successfully added to "habitsucceeded", now update the habit in habitList
-                            if (position < habitList.size) {
-                                habitList[position] = updatedHabitData
-                                notifyItemChanged(position)
-                            }
+                            // Notify the TodayFragment to refresh the list
+                            (context as? AppCompatActivity)?.supportFragmentManager?.setFragmentResult(
+                                "habitCompleted",
+                                Bundle()
+                            )
                         }
                         .addOnFailureListener {
                             // Handle any errors if necessary
