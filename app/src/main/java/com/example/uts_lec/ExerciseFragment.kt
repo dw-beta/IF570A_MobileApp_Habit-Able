@@ -60,7 +60,7 @@ class ExerciseFragment : Fragment() {
                         "customHabitName" to "Exercise",
                         "description" to "Exercise is any bodily activity that enhances or maintains physical fitness and overall health and wellness",
                         "dateCreated" to Date(),
-                        "isCompleted" to false,
+                        "completionStatus" to false,
                         "doItAt" to "Anytime",
                         "color" to "#97acac"  // Using a different color to distinguish it
                     )

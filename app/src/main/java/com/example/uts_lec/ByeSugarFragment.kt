@@ -60,7 +60,7 @@ class ByeSugarFragment : Fragment() {
                         "customHabitName" to "Bye Sugar",
                         "description" to "Reduce sugar intake for better health",
                         "dateCreated" to Date(),
-                        "isCompleted" to false,
+                        "completionStatus" to false,
                         "doItAt" to "Anytime",
                         "color" to "#FF69B4"  // Using a different color to distinguish it
                     )

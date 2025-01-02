@@ -60,7 +60,7 @@ class MeditationFragment : Fragment() {
                         "customHabitName" to "Mediation",
                         "description" to "Meditation is a practice where an individual uses a technique – such as mindfulness",
                         "dateCreated" to Date(),
-                        "isCompleted" to false,
+                        "completionStatus" to false,
                         "doItAt" to "Anytime",
                         "color" to "#97acac"  // Using a different color to distinguish it
                     )

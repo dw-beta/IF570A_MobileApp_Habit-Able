@@ -66,7 +66,7 @@ class DrinkFragment : Fragment() {
                         "customHabitName" to "Drink Water",
                         "description" to "Drink 8 glasses of water daily",
                         "dateCreated" to Date(),
-                        "isCompleted" to false,
+                        "completionStatus" to false,
                         "doItAt" to "Anytime",
                         "color" to "#18C6FD"
                     )
