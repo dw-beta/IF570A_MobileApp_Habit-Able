@@ -40,4 +40,5 @@ Fitur-fitur yang sudah diimplementasikan:
      5. General Setting (Delete All Data button, dan bisa set periode time Morning/Afternoon/Evening dari jam tertentu sampai jam tertentu yang berpengaruh ke Today page)
      6. Language (Bisa mengubah bahasa dari English ke Indonesia, dan sebaliknya)
      7. Share button
-     8. Log out button
+     8. Rate Us & Feedback button (Untuk ketika aplikasi sudah launch, untuk sekarang belum ada fungsi)
+     9. Log out button
